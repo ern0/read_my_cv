@@ -1,0 +1,45 @@
+[intro]
+
+  [name] Ernő Zalka
+  [title] senior software engineer
+  [home] Biatorbágy, Hungary
+  [phone] +36...
+  [email] ern0plus4
+  [github] https://github.com/
+
+
+[skills]
+
+  C *****
+  C++ ******
+
+[experience] 
+
+  [position] C/C++ Developer @ AI Fleet, Inc. (2022-2023)
+    [project]
+      Created haversine distance calculation replacement
+      in-memory table for USA, 3 GiByte, cca. 10 km accurate.
+      Created cloud client and server #python #aws
+      Wrote haversine replacement module #c
+    [project]
+      JSON converter #python and parser #c
+
+  [position] Embedded Systems Developer @ Heitec Kft. (2019-2022)
+    [project]
+      Created end-to-end test framework for testing the company’s 
+      own manufactured PC
+      #python #c #html #css #pdf-generator
+    [project]
+      Created I2C, CAN, serial tester tools for embedded devices 
+      #c #embedded
+    [project]
+      Implemented healthcare product firmware modules
+      #c #embedded
+
+  [position] Flight simulation development @ CAE Engineering (2017-2019)
+    [project]
+      Implement flight simulator functions #cp
+    [project]
+      Desing and implement tools #python
+    [project]
+      Mentoring developers, create educational materials

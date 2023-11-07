@@ -1,0 +1,22 @@
+div, body {
+	font-family:'Times New Roman', Times, serif; 
+	font-size: 16pt;
+}
+
+h1 {
+	color: #339;
+}
+
+.experience {
+	background-color: #eee;
+}
+
+.project {
+	border-bottom: 2px solid #333;
+	padding-bottom: 4px;
+}
+
+.workplace {
+	font-weight: bold;
+	padding-bottom: 12px;
+}

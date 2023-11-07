@@ -1,0 +1,19 @@
+/* disabled */
+/* We have 3 roles:
+   - prosti
+	 - devops
+	 - pedmed
+*/
+
+/* Disabled ones */
+[cv-role="prosti"] {
+	display: none;
+}
+[cv-role="devops"] {
+	display: none;
+}
+
+/* enabled ones */
+[cv-role="pedmed"] {
+
+}

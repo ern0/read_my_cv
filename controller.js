@@ -1,4 +1,4 @@
-function setElementVisible(element, visible) {
+function setVisibleByElement(element, visible) {
   if (element === undefined) {
     return;
   }
@@ -16,21 +16,38 @@ function setVisibleByAttributeNameValue(attributeName, attributeValue, visible) 
 
   for (let i = 0; i < elements.length; i++) {
     const element = elements[i];
-    setElementVisible(element, visible);
+    setVisibleByElement(element, visible);
   }
 }
 
-function appendVisibleButton(parent, attributeName, attributeValue, visible) {
-  const button = document.createElement("button");
-  button.type = "button";
-  const onclick = "setVisibleByAttributeNameValue(" + "'" + attributeName + "', '" + attributeValue + "', " + visible + ")";
-  button.setAttribute("onclick", onclick);
-  button.innerHTML = (visible == 0 ? "Hide" : "Show") + " " + attributeValue;
-
-  parent.append(button);
-}
-
 function prependController(parent, attributeName, visible) {
+
+  function appendItem(parent, attributeName, attributeValue, visible) {
+
+    function appendVisibleButton(parent, attributeName, attributeValue, visible) {
+      const button = document.createElement("button");
+      button.type = "button";
+    
+      const onclick = "setVisibleByAttributeNameValue(" +
+        "'" + attributeName + "', " +
+        "'" + attributeValue + "', " +
+        visible + ")";
+    
+      button.setAttribute("onclick", onclick);
+      button.innerHTML = (visible == 0 ? "Hide" : "Show") + " " + attributeValue;
+    
+      parent.append(button);
+    }
+
+    const item = document.createElement("div");
+    item.className = "item";
+
+    appendVisibleButton(item, attributeName, attributeValue, 0);
+    appendVisibleButton(item, attributeName, attributeValue, 1);
+
+    parent.append(item);    
+  }
+
   const elements = document.querySelectorAll("[" + attributeName + "]");
 
   if ((elements === undefined) || (elements.length == 0)) {
@@ -48,18 +65,11 @@ function prependController(parent, attributeName, visible) {
   for (let i = 0; i < elements.length; i++) {
     const element = elements[i];
     const attributeValue = element.getAttribute(attributeName).trim();
-
-    const item = document.createElement("div");
-    item.className = "item";
-
-    appendVisibleButton(item, attributeName, attributeValue, 0);
-    appendVisibleButton(item, attributeName, attributeValue, 1);
-
-    controller.append(item);
+    appendItem(controller, attributeName, attributeValue);
   }
 
-  setElementVisible(controller, visible);
+  setVisibleByElement(controller, visible);
   parent.prepend(controller);
 
-  return(controller);
+  return controller;
 }

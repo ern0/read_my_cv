@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+  <html>
+    <body onload = "initialize()">
+
+      <script src="controller.js"></script>
+
+      <script>
+        function initialize() {        
+          const visible = 1; // TODO: Read URL to determine if controller is to start visible or invisible
+          const controller = prependController(document.body, "controlled", visible);
+        }
+      </script>
+
+      <h1>Output</h1>
+
+      <p>
+        <div class="test" controlled="Bob">
+          This is Bob
+        </div>
+
+        <div class="test" controlled="Billy">
+          This is Billy
+        </div>
+
+        <div class="test" controlled="Sam">
+          This is Sam
+        </div>
+      </p>
+
+    </body>
+</html>

@@ -6,9 +6,51 @@
 
       <script>
         function initialize() {        
-          const visible = 1; // TODO: Read URL to determine if controller is to start visible or invisible
-          const controller = prependController(document.body, "controlled", visible);
+          var controller;
+
+          var keyTimer
+          var keyInput = "";
+
+          function onKey(event) {
+            const keyTimeout = 2000;
+            const secret = "bob";
+
+            function startKeyTimer() {
+
+              function onKeyTimeout() {
+                keyInput = "";
+              }
+
+              keyTimer = setTimeout(onKeyTimeout, keyTimeout);
+            }
+
+            function stopKeyTimer() {
+              clearTimeout(keyTimer);
+            }
+
+            if (event.isComposing || event.keyCode === 229) { // 229 is a special value set for a keyCode relating to an event that has been processed by an input-method editor
+              return;
+            }
+
+            stopKeyTimer();
+
+            var char = String.fromCharCode(event.which);
+            keyInput += char.toLowerCase();
+
+            if (keyInput != secret.toLowerCase()) {
+              startKeyTimer();
+              return;
+            }
+
+            setVisibleByElement(controller, 1);
+          }
+
+          var visible = 0; // TODO: Read URL to determine if controller is to start visible or invisible
+          controller = prependController(document.body, "controlled", visible);
+
+          document.addEventListener("keyup", onKey);
         }
+ 
       </script>
 
       <h1>Output</h1>

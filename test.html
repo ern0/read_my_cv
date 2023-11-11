@@ -5,49 +5,59 @@
       <script src="controller.js"></script>
 
       <script>
-        function initialize() {        
-          let controller;
-
-          let keyTimer
-          let keyInput = "";
-
-          function onKey(event) {
-            const keyTimeout = 2000;
-            const secret = "bob";
-
-            function startKeyTimer() {
-
-              function onKeyTimeout() {
-                keyInput = "";
-              }
-
-              keyTimer = setTimeout(onKeyTimeout, keyTimeout);
-            }
-
-            function stopKeyTimer() {
-              clearTimeout(keyTimer);
-            }
-
-            if (event.isComposing || event.keyCode === 229) { // 229 is a special value set for a keyCode relating to an event that has been processed by an input-method editor
-              return;
-            }
-
-            stopKeyTimer();
-
-            const char = String.fromCharCode(event.which);
-            keyInput += char.toLowerCase();
-
-            if (keyInput != secret.toLowerCase()) {
-              startKeyTimer();
-              return;
-            }
-
-            setVisibleByElement(controller, 1);
+        function initialize() {
+          const controller = {
+            element: undefined,
+            visible: 0 // TODO: Read URL to determine if controller is to start visible or invisible
           }
 
-          const visible = 0; // TODO: Read URL to determine if controller is to start visible or invisible
-          controller = prependController(document.body, "controlled", visible);
+          const input = {
+            text: "",
+            at: undefined
+          }
 
+          function onKey(event) {
+            const keyNow = Date.now();
+            const keyThen = input.at;
+
+            const ignoreKeys = ["Alt", "Control", "Shift"];
+            const resetKeys = ["Backspace", "Delete", "Escape"];
+
+            const secret = {
+              text: "Bob",
+              timeout: 2000 // ms
+            }
+
+            const key = event.key;
+
+            if ((ignoreKeys.includes(key) || event.isComposing || event.keyCode === 229)) { // 229 is a special value set for a keyCode relating to an event that has been processed by an input-method editor -- TODO: Use event.code and appropriate string value! 
+              return;
+            }
+
+            input.at = keyNow;
+            const reset = resetKeys.includes(key);
+            const timeout = keyNow - keyThen > secret.timeout;
+
+            if ((reset) || (timeout)) {
+              input.text = "";
+
+              if (reset) {
+                return;
+              }
+            }
+
+            input.text += key;
+
+            if (input.text != secret.text) {
+              return;
+            }
+
+            setVisibleByElement(controller.element, 1);
+            document.removeEventListener("keyup", onKey);
+            controller.visible = 1;
+          }
+
+          controller.element = prependController(document.body, "controlled", controller.visible);
           document.addEventListener("keyup", onKey);
         }
  

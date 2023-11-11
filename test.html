@@ -6,10 +6,10 @@
 
       <script>
         function initialize() {        
-          var controller;
+          let controller;
 
-          var keyTimer
-          var keyInput = "";
+          let keyTimer
+          let keyInput = "";
 
           function onKey(event) {
             const keyTimeout = 2000;
@@ -34,7 +34,7 @@
 
             stopKeyTimer();
 
-            var char = String.fromCharCode(event.which);
+            const char = String.fromCharCode(event.which);
             keyInput += char.toLowerCase();
 
             if (keyInput != secret.toLowerCase()) {
@@ -45,7 +45,7 @@
             setVisibleByElement(controller, 1);
           }
 
-          var visible = 0; // TODO: Read URL to determine if controller is to start visible or invisible
+          const visible = 0; // TODO: Read URL to determine if controller is to start visible or invisible
           controller = prependController(document.body, "controlled", visible);
 
           document.addEventListener("keyup", onKey);

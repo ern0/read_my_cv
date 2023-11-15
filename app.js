@@ -6,7 +6,7 @@ function appInitialize() {
 
   const controller = {
     element: undefined,
-    visible: 0 // TODO: Read URL to determine if controller is to start visible or invisible
+    visible: false // TODO: Read URL to determine if controller is to start visible or invisible
   }
 
   const input = {
@@ -77,9 +77,9 @@ function appInitialize() {
       return;
     }
 
-    setVisibleByElement(controller.element, 1);
+    setVisibleByElement(controller.element, true);
     document.removeEventListener("keyup", onKey);
-    controller.visible = 1;
+    controller.visible = true;
   }
 
   controller.element = prependController(document.body, "controlled", controller.visible);

@@ -3,8 +3,22 @@ function setVisibleByElement(element, visible) {
     return;
   }
 
-  const value = (visible == 0 ? "none" : "");
+  const value = (!visible ? "none" : "");
   element.style.display = value;
+}
+
+function setVisibleByAttributeName(attributeName, visible) {
+  const elements = document.querySelectorAll("[" + attributeName + "]");
+  console.log("2");
+
+  if ((elements === undefined) || (elements.length == 0)) {
+    return;
+  }
+
+  for (let i = 0; i < elements.length; i++) {
+    const element = elements[i];
+    setVisibleByElement(element, visible);
+  }
 }
 
 function setVisibleByAttributeNameValue(attributeName, attributeValue, visible) {
@@ -17,6 +31,17 @@ function setVisibleByAttributeNameValue(attributeName, attributeValue, visible) 
   for (let i = 0; i < elements.length; i++) {
     const element = elements[i];
     setVisibleByElement(element, visible);
+  }
+}
+
+function setVisibleByAttributeNameValues(attributeName, attributeValues, visible) {
+  if ((attributeValues === undefined) || (attributeValues.length == 0)) {
+    return;
+  }
+
+  for (let i = 0; i < attributeValues.length; i++) {
+    const attributeValue = attributeValues[i];
+    setVisibleByAttributeNameValue(attributeName, attributeValue, visible)
   }
 }
 
@@ -34,7 +59,7 @@ function prependController(parent, attributeName, visible) {
         visible + ")";
     
       button.setAttribute("onclick", onclick);
-      button.innerHTML = (visible == 0 ? "Hide" : "Show") + " " + attributeValue;
+      button.innerHTML = (!visible ? "Hide" : "Show") + " " + attributeValue;
     
       parent.append(button);
     }
@@ -42,8 +67,8 @@ function prependController(parent, attributeName, visible) {
     const item = document.createElement("div");
     item.className = "item";
 
-    appendVisibleButton(item, attributeName, attributeValue, 0);
-    appendVisibleButton(item, attributeName, attributeValue, 1);
+    appendVisibleButton(item, attributeName, attributeValue, false);
+    appendVisibleButton(item, attributeName, attributeValue, true);
 
     parent.append(item);    
   }

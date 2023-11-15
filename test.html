@@ -1,25 +1,48 @@
 <!DOCTYPE html>
 <html>
-
-  <body onload="appInitialize()">
-
+  <head>
     <script src="controller.js"></script>
     <script src="app.js"></script>
+  </head>
 
+  <body onload="testInitialize()">
+
+    <script>
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+
+      appInitialize();
+
+      function getAttributeValuesByName(attributeName) { // TODO: Remove -- test only!
+        const attributeValues = {
+          "google": ["Sam"],
+          "microsoft": ["Bob", "Billy"],
+          "all": ["Bob", "Billy", "Sam"]
+        };
+
+        return attributeValues[attributeName];
+      }
+
+      const attributeName = urlParams.get('name');
+      const attributeValues = getAttributeValuesByName(attributeName);
+      setVisibleByAttributeName("controlled", false); // Hide all
+      setVisibleByAttributeNameValues("controlled", attributeValues, true); // Show conditionally
+    </script>
+  
     <h1>Output</h1>
 
     <p>
-    <div class="test" controlled="Bob">
-      This is Bob
-    </div>
+      <div class="test" controlled="Bob">
+        This is Bob
+      </div>
 
-    <div class="test" controlled="Billy">
-      This is Billy
-    </div>
+      <div class="test" controlled="Billy">
+        This is Billy
+      </div>
 
-    <div class="test" controlled="Sam">
-      This is Sam
-    </div>
+      <div class="test" controlled="Sam">
+        This is Sam
+      </div>
     </p>
 
   </body>

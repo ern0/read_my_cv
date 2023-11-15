@@ -1,4 +1,4 @@
-function appInitialize(controlledAttribute, controllerVisible, secret, debug) {
+function appInitialize(controlledAttribute, controllerVisible, unhideSecret, debug) {
   const controller = {
     element: undefined,
     visible: controllerVisible
@@ -18,7 +18,7 @@ function appInitialize(controlledAttribute, controllerVisible, secret, debug) {
     const terminatorKeys = ["Enter"];
 
     const secret = {
-      text: secret,
+      text: unhideSecret,
       timeout: 2000 // ms
     }
 

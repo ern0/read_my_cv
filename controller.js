@@ -9,7 +9,6 @@ function setVisibleByElement(element, visible) {
 
 function setVisibleByAttributeName(attributeName, visible) {
   const elements = document.querySelectorAll("[" + attributeName + "]");
-  console.log("2");
 
   if ((elements === undefined) || (elements.length == 0)) {
     return;

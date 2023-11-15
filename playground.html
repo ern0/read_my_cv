@@ -2,7 +2,7 @@
 <html>
   <head>
     <script src="controller.js"></script>
-    <script src="app.js"></script>
+    <script src="controllerManager.js"></script>
   </head>
 
   <body onload="testInitialize()">
@@ -30,7 +30,7 @@
         setVisibleByAttributeName("controlled", false); // Hide all
         setVisibleByAttributeNameValues("controlled", attributeValues, true); // Show conditionally
 
-        appInitialize("controlled", controllerStartsVisible, "Bob", debug);
+        initializeControllerManager("controlled", controllerStartsVisible, "Bob", debug);
       }
     </script>
   

@@ -1,4 +1,4 @@
-function appInitialize(controlledAttribute, controllerVisible, unhideSecret, debug) {
+function initializeControllerManager(controlledAttribute, controllerVisible, unhideSecret, debug) {
   const controller = {
     element: undefined,
     visible: controllerVisible

@@ -8,25 +8,27 @@
   <body onload="testInitialize()">
 
     <script>
-      const queryString = window.location.search;
-      const urlParams = new URLSearchParams(queryString);
+      function testInitialize() {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
 
-      appInitialize();
+        appInitialize();
 
-      function getAttributeValuesByName(attributeName) { // TODO: Remove -- test only!
-        const attributeValues = {
-          "google": ["Sam"],
-          "microsoft": ["Bob", "Billy"],
-          "all": ["Bob", "Billy", "Sam"]
-        };
+        function getAttributeValuesByName(attributeName) { // TODO: Remove -- test only!
+          const attributeValues = {
+            "google": ["Sam"],
+            "microsoft": ["Bob", "Billy"],
+            "all": ["Bob", "Billy", "Sam"]
+          };
 
-        return attributeValues[attributeName];
+          return attributeValues[attributeName];
+        }
+
+        const attributeName = urlParams.get('name');
+        const attributeValues = getAttributeValuesByName(attributeName);
+        setVisibleByAttributeName("controlled", false); // Hide all
+        setVisibleByAttributeNameValues("controlled", attributeValues, true); // Show conditionally
       }
-
-      const attributeName = urlParams.get('name');
-      const attributeValues = getAttributeValuesByName(attributeName);
-      setVisibleByAttributeName("controlled", false); // Hide all
-      setVisibleByAttributeNameValues("controlled", attributeValues, true); // Show conditionally
     </script>
   
     <h1>Output</h1>

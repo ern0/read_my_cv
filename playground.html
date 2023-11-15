@@ -12,9 +12,10 @@
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
 
-        appInitialize();
+        const debug = urlParams.get('debug') == "true";
+        const controllerStartsVisible = false;
 
-        function getAttributeValuesByName(attributeName) { // TODO: Remove -- test only!
+        function getAttributeValuesByName(attributeName) {
           const attributeValues = {
             "google": ["Sam"],
             "microsoft": ["Bob", "Billy"],
@@ -28,6 +29,8 @@
         const attributeValues = getAttributeValuesByName(attributeName);
         setVisibleByAttributeName("controlled", false); // Hide all
         setVisibleByAttributeNameValues("controlled", attributeValues, true); // Show conditionally
+
+        appInitialize("controlled", controllerStartsVisible, "Sam", debug);
       }
     </script>
   

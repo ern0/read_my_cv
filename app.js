@@ -1,12 +1,7 @@
-function appInitialize() {
-  const queryString = window.location.search;
-  const urlParams = new URLSearchParams(queryString);
-
-  const debug = urlParams.get('debug') == "true";
-
+function appInitialize(controlledAttribute, controllerVisible, secret, debug) {
   const controller = {
     element: undefined,
-    visible: false // TODO: Read URL to determine if controller is to start visible or invisible
+    visible: controllerVisible
   }
 
   const input = {
@@ -23,7 +18,7 @@ function appInitialize() {
     const terminatorKeys = ["Enter"];
 
     const secret = {
-      text: "Bob",
+      text: secret,
       timeout: 2000 // ms
     }
 
@@ -82,6 +77,9 @@ function appInitialize() {
     controller.visible = true;
   }
 
-  controller.element = prependController(document.body, "controlled", controller.visible);
-  document.addEventListener("keyup", onKey);
+  controller.element = prependController(document.body, controlledAttribute, controller.visible);
+
+  if (!controller.visible) {
+    document.addEventListener("keyup", onKey);
+  }
 }

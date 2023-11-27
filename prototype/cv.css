@@ -5,6 +5,7 @@ div, body {
 
 h1 {
 	color: #339;
+	display: inline;
 }
 
 .experience {

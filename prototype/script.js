@@ -2,7 +2,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 	roles = collect_roles();
 	hide_all();
-	show_role(roles[0]);
+
+	let req_tags = parse_req();
+	if (req_tags == null) {
+		req_tags = pick_default_roles(roles);
+	} 
+	for (const req of req_tags) {
+		show_role(req);
+	}
 
 });
 
@@ -24,7 +31,7 @@ function collect_roles() {
 function hide_all() {
 
 	const role_elms = document.querySelectorAll("[cv-role]");
-	for (let elm of role_elms) {
+	for (const elm of role_elms) {
 		hide_elm(elm);	
 	}
 }
@@ -49,7 +56,6 @@ function show_elm(elm) {
 function show_role(role) {
 
 	const query = "[cv-role=" + quote(role) + "]";
-	console.log(query);
 	const role_elms = document.querySelectorAll(query);
 	for (let elm of role_elms) {
 		show_elm(elm);	
@@ -59,4 +65,17 @@ function show_role(role) {
 
 function quote(str) {
 	return "\"" + str + "\"";
+}
+
+function parse_req() {
+
+	const url_params = new URLSearchParams(window.location.search);
+	const tags = url_params.get("tags");
+	if (tags == null) return null;
+
+	return tags.split(",");
+}
+
+function pick_default_roles(roles) {
+	return [roles[0]];
 }

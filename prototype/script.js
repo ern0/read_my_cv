@@ -1,19 +1,15 @@
-document.addEventListener("DOMContentLoaded", function(event) {
+document.addEventListener("DOMContentLoaded", main);
 
-	roles = collect_roles();
-	hide_all();
+function main() {
+	
+	let req_roles = parse_req_roles();	
+	req_roles = normalize_req_roles(req_roles);
+	update_dom_with_roles(req_roles);
+	replace_url_roles(req_roles);
 
-	let req_tags = parse_req();
-	if (req_tags == null) {
-		req_tags = pick_default_roles(roles);
-	} 
-	for (const req of req_tags) {
-		show_role(req);
-	}
+}
 
-});
-
-function collect_roles() {
+function collect_dom_roles() {
 
 	let tags = {};
 	const role_elms = document.querySelectorAll("[cv-role]");
@@ -26,6 +22,39 @@ function collect_roles() {
 	};
 
 	return Object.keys(tags);
+}
+
+function update_dom_with_roles(req_roles) {
+
+	hide_all();
+	for (const req of req_roles) {
+		show_role(req);
+	}
+
+}
+
+function replace_url_roles(roles) {
+
+	let params = new URLSearchParams(window.location.search);
+	params.set("roles", roles.join(","));
+
+	let url = window.location.origin;
+	url += window.location.pathname;
+	url += "?" + params.toString();
+	url = url.replace("%2C", ",");
+
+	try {		
+
+		history.pushState({}, "", url);
+
+	} catch (ex) {
+		if (ex instanceof DOMException) {
+			console.warn("Can't rewrite URL for file:///");
+		} else {
+			throw ex;
+		}
+	}
+
 }
 
 function hide_all() {
@@ -67,15 +96,47 @@ function quote(str) {
 	return "\"" + str + "\"";
 }
 
-function parse_req() {
+function parse_req_roles() {
 
 	const url_params = new URLSearchParams(window.location.search);
-	const tags = url_params.get("tags");
+	const tags = url_params.get("roles");
 	if (tags == null) return null;
 
 	return tags.split(",");
 }
 
+function normalize_req_roles(req_roles) {
+
+	const collected_roles = collect_dom_roles();
+
+	if (req_roles == null) {
+		req_roles = [];
+	}
+	if (req_roles.length == 0) {
+		req_roles = pick_default_roles(collected_roles);
+	}
+
+	req_roles = validate_req_roles(req_roles, collected_roles);
+
+	if (req_roles.length == 0) {
+		req_roles = pick_default_roles(collected_roles);
+	}
+
+	return req_roles;
+}
+
 function pick_default_roles(roles) {
 	return [roles[0]];
+}
+
+function validate_req_roles(req_roles, valid) {
+
+	validated = [];
+
+	for (role of req_roles) {
+		if (!valid.includes(role)) continue;
+		validated.push(role);
+	}
+
+	return validated;
 }

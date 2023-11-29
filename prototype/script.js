@@ -2,11 +2,19 @@ document.addEventListener("DOMContentLoaded", main);
 
 function main() {
 	
+	const dom_roles = collect_dom_roles();
+	let req_roles = update_req_roles(dom_roles);
+	create_popup(req_roles, dom_roles);
+}
+
+function update_req_roles(dom_roles) {
+
 	let req_roles = parse_req_roles();	
-	req_roles = normalize_req_roles(req_roles);
+	req_roles = normalize_req_roles(req_roles, dom_roles);
 	update_dom_with_roles(req_roles);
 	replace_url_roles(req_roles);
 
+	return req_roles;
 }
 
 function collect_dom_roles() {
@@ -105,9 +113,7 @@ function parse_req_roles() {
 	return tags.split(",");
 }
 
-function normalize_req_roles(req_roles) {
-
-	const collected_roles = collect_dom_roles();
+function normalize_req_roles(req_roles, collected_roles) {
 
 	if (req_roles == null) {
 		req_roles = [];
@@ -139,4 +145,36 @@ function validate_req_roles(req_roles, valid) {
 	}
 
 	return validated;
+}
+
+function create_popup(req_roles, dom_roles) {
+
+	let content = "";
+	for (role of dom_roles) {
+		content += "<input";
+		content += " class=" + quote("check");
+		content += " type=" + quote("checkbox");
+		content += " id=" + quote("check-" + role);
+		content += " name=" + quote(role);
+		content += " onclick=" + quote("check_clicked('" + role + "');");
+		if (req_roles.includes(role)) {
+			content += " checked";
+		}
+		content += " /> " + role;
+		content += "<br/>";
+	}
+
+	let popup = document.querySelector(".popup");
+	popup.innerHTML = content;
+
+}
+
+function check_clicked(role) {
+
+	let req_roles = parse_req_roles();
+	req_roles = req_roles.filter(function(item) {
+			return item !== role;
+	})
+	
+	update_req_roles();
 }

@@ -3,8 +3,9 @@ div, body {
 	font-size: 16pt;
 }
 
-.popup {
+.sidepanel {
 	background-color: #fed;
+	opacity: 10%;
 	border-left: 2px solid #987;
 	border-top: 2px solid #987;
 	border-bottom: 2px solid #987;
@@ -15,12 +16,15 @@ div, body {
 	position: fixed;
 	top: 5%;
 	right: 0;
-	opacity: 10%;
-	transition: opacity .9s ease;
+
+	transform: translateX(calc(100% - 40px));
+	transition: opacity .9s ease .4s, transform .9s ease .4s;
 }
-.popup:hover {
+.sidepanel:hover {
+	transform: translateX(0);
+
 	opacity: 90%;
-	transition: opacity .1s linear;
+	transition: opacity .1s linear, transform .1s linear;
 }
 
 h1 {

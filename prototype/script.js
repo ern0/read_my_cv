@@ -4,7 +4,7 @@ function main() {
 	
 	const dom_roles = collect_dom_roles();
 	let req_roles = update_req_roles(dom_roles);
-	create_popup(req_roles, dom_roles);
+	create_sidepanel(req_roles, dom_roles);
 }
 
 function update_req_roles(dom_roles) {
@@ -147,7 +147,7 @@ function validate_req_roles(req_roles, valid) {
 	return validated;
 }
 
-function create_popup(req_roles, dom_roles) {
+function create_sidepanel(req_roles, dom_roles) {
 
 	let content = "";
 	for (role of dom_roles) {
@@ -164,8 +164,8 @@ function create_popup(req_roles, dom_roles) {
 		content += "<br/>";
 	}
 
-	let popup = document.querySelector(".popup");
-	popup.innerHTML = content;
+	let sidepanel = document.querySelector(".sidepanel");
+	sidepanel.innerHTML = content;
 
 }
 

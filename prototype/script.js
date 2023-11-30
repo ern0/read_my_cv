@@ -2,19 +2,12 @@ document.addEventListener("DOMContentLoaded", main);
 
 function main() {
 	
-	const dom_roles = collect_dom_roles();
-	let req_roles = update_req_roles(dom_roles);
-	create_sidepanel(req_roles, dom_roles);
-}
+	app = {};
+	collect_dom_roles();
+	parse_req_roles();	
+	update_req_roles();
+	create_sidepanel();
 
-function update_req_roles(dom_roles) {
-
-	let req_roles = parse_req_roles();	
-	req_roles = normalize_req_roles(req_roles, dom_roles);
-	update_dom_with_roles(req_roles);
-	replace_url_roles(req_roles);
-
-	return req_roles;
 }
 
 function collect_dom_roles() {
@@ -29,22 +22,30 @@ function collect_dom_roles() {
 		}
 	};
 
-	return Object.keys(tags);
+	app.dom_roles = Object.keys(tags);
 }
 
-function update_dom_with_roles(req_roles) {
+function update_req_roles() {
+
+	normalize_req_roles();
+	update_dom_with_roles();
+	replace_url_roles();
+
+}
+
+function update_dom_with_roles() {
 
 	hide_all();
-	for (const req of req_roles) {
+	for (const req of app.req_roles) {
 		show_role(req);
 	}
 
 }
 
-function replace_url_roles(roles) {
+function replace_url_roles() {
 
 	let params = new URLSearchParams(window.location.search);
-	params.set("roles", roles.join(","));
+	params.set("roles", app.req_roles.join(","));
 
 	let url = window.location.origin;
 	url += window.location.pathname;
@@ -108,56 +109,52 @@ function parse_req_roles() {
 
 	const url_params = new URLSearchParams(window.location.search);
 	const tags = url_params.get("roles");
-	if (tags == null) return null;
-
-	return tags.split(",");
+	if (tags == null) tags = "";
+	
+	app.req_roles = tags.split(",");
 }
 
-function normalize_req_roles(req_roles, collected_roles) {
+function normalize_req_roles() {
 
-	if (req_roles == null) {
-		req_roles = [];
-	}
-	if (req_roles.length == 0) {
-		req_roles = pick_default_roles(collected_roles);
+	if (app.req_roles.length == 0) {
+		pick_default_roles();
 	}
 
-	req_roles = validate_req_roles(req_roles, collected_roles);
+	validate_req_roles();
 
-	if (req_roles.length == 0) {
-		req_roles = pick_default_roles(collected_roles);
+	if (app.req_roles.length == 0) {
+		pick_default_roles();
 	}
 
-	return req_roles;
 }
 
-function pick_default_roles(roles) {
-	return [roles[0]];
+function pick_default_roles() {
+	app.req_roles = [app.dom_roles[0]];
 }
 
-function validate_req_roles(req_roles, valid) {
+function validate_req_roles() {
 
 	validated = [];
 
-	for (role of req_roles) {
-		if (!valid.includes(role)) continue;
+	for (role of app.req_roles) {
+		if (!app.dom_roles.includes(role)) continue;
 		validated.push(role);
 	}
 
-	return validated;
+	app.req_roles = validated;
 }
 
-function create_sidepanel(req_roles, dom_roles) {
+function create_sidepanel() {
 
 	let content = "";
-	for (role of dom_roles) {
+	for (role of app.dom_roles) {
 		content += "<input";
 		content += " class=" + quote("check");
 		content += " type=" + quote("checkbox");
 		content += " id=" + quote("check-" + role);
 		content += " name=" + quote(role);
 		content += " onclick=" + quote("check_clicked('" + role + "');");
-		if (req_roles.includes(role)) {
+		if (app.req_roles.includes(role)) {
 			content += " checked";
 		}
 		content += " /> " + role;
@@ -170,11 +167,15 @@ function create_sidepanel(req_roles, dom_roles) {
 }
 
 function check_clicked(role) {
-
-	let req_roles = parse_req_roles();
-	req_roles = req_roles.filter(function(item) {
-			return item !== role;
-	})
 	
+	if (app.req_roles.includes(role)) {	
+		app.req_roles = app.req_roles.filter(function(item) {
+				return item !== role;
+		});
+	} else {
+		app.req_roles.push(role);
+	}
+
 	update_req_roles();
+
 }

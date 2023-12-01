@@ -11,8 +11,8 @@ function main() {
     parse_url_req_tags();
     
 	update_document();
-    //update_url();
-	//update_sidepanel();
+	update_sidepanel();
+    update_url();
     
     /// http://localhost:8080/cv.html?tags=role:prosti,role:pedmed,happy,innnn,return,xxxxx&a=12121
 }
@@ -144,15 +144,10 @@ function widget_mkid(category, tag) {
     return "widget-" + category + "-" + tag;
 }
 
-function widget_clicked(category, tag) {
-
-    console.log(category, tag); /// TBD
-	
-}
-
 function set_default_req_tags() {
 
     app.req = {};
+    app.req["_tag"] = [];
 
     for (const category in app.tags) {
         if (category[0] == "_") continue;
@@ -243,16 +238,79 @@ function show_elm(elm) {
 	elm.style.display = elm.getAttribute("_style_display");
 }
 
+function update_sidepanel() {
+
+    update_sidepanel_hide_all();
+    update_sidepanel_show_req();
+
+}
+
+function update_sidepanel_hide_all() {
+
+    for (const category in app.tags) {
+        for (const tag in app.tags[category]) {
+
+            const widget_id = widget_mkid(category, tag);
+            elm = document.getElementById(widget_id);
+            elm.checked = false;
+            
+        }
+    }
+}
+
+function update_sidepanel_show_req() {
+
+    for (const category in app.req) {
+        for (const tag of app.req[category]) {
+
+            const widget_id = widget_mkid(category, tag);
+            elm = document.getElementById(widget_id);
+            elm.checked = true;
+
+        }
+    }
+}
+
+function widget_clicked(category, tag) {
+
+    if (category[0] == "_") {
+        widget_clicked_checkbox(category, tag);
+    } else {
+        widget_clicked_radio(category, tag);
+    }
+
+    update_document();
+    update_sidepanel();
+    update_url();
+}
+
+function widget_clicked_radio(category, tag) {
+
+    if (app.req[category].includes(tag)) return;
+    app.req[category] = [tag];
+}
+
+function widget_clicked_checkbox(category, tag) {
+
+    if (app.req[category].includes(tag)) {
+        app.req[category] = app.req[category].filter(
+            function(item) { return item != tag }
+        );  
+    } else {
+        app.req[category].push(tag);
+    }
+}
 
 function update_url() {
 
 	let params = new URLSearchParams(window.location.search);
-	params.set("roles", app.req_roles.join(","));
+	params.set("tags", render_taglist());
 
 	let url = window.location.origin;
 	url += window.location.pathname;
 	url += "?" + params.toString();
 	url = url.replaceAll("%2C", ",");
+	url = url.replaceAll("%3A", ":");
 
 	try {		
 		history.pushState({}, "", url);
@@ -265,16 +323,18 @@ function update_url() {
 	}
 }
 
+function render_taglist() {
 
+    result = "";
 
+    for (const category in app.req) {
+        for (const tag of app.req[category]) {
 
+            if (result != "") result += ",";
+            if (category[0] != "_") result += category + ":";
+            result += tag;
+        }
+    }
 
-
-function update_sidepanel() {
-
-	const check_elms = document.querySelectorAll(".check");
-	for (const elm of check_elms) {
-        const role = check_id_parse_role(elm.id);
-		elm.checked = app.req_roles.includes(role);
-	}
+    return result;
 }

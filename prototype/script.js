@@ -3,11 +3,12 @@ document.addEventListener("DOMContentLoaded", main);
 function main() {
 	
 	app = {};
+
 	collect_dom_roles();
 	parse_req_roles();	
 	update_req_roles();
 	create_sidepanel();
-
+	update_sidepanel();
 }
 
 function collect_dom_roles() {
@@ -30,6 +31,7 @@ function update_req_roles() {
 	normalize_req_roles();
 	update_dom_with_roles();
 	replace_url_roles();
+    update_sidepanel();
 
 }
 
@@ -39,7 +41,6 @@ function update_dom_with_roles() {
 	for (const req of app.req_roles) {
 		show_role(req);
 	}
-
 }
 
 function replace_url_roles() {
@@ -50,12 +51,10 @@ function replace_url_roles() {
 	let url = window.location.origin;
 	url += window.location.pathname;
 	url += "?" + params.toString();
-	url = url.replace("%2C", ",");
+	url = url.replaceAll("%2C", ",");
 
 	try {		
-
 		history.pushState({}, "", url);
-
 	} catch (ex) {
 		if (ex instanceof DOMException) {
 			console.warn("Can't rewrite URL for file:///");
@@ -63,7 +62,6 @@ function replace_url_roles() {
 			throw ex;
 		}
 	}
-
 }
 
 function hide_all() {
@@ -98,7 +96,6 @@ function show_role(role) {
 	for (let elm of role_elms) {
 		show_elm(elm);	
 	}
-
 }
 
 function quote(str) {
@@ -125,7 +122,6 @@ function normalize_req_roles() {
 	if (app.req_roles.length == 0) {
 		pick_default_roles();
 	}
-
 }
 
 function pick_default_roles() {
@@ -151,31 +147,43 @@ function create_sidepanel() {
 		content += "<input";
 		content += " class=" + quote("check");
 		content += " type=" + quote("checkbox");
-		content += " id=" + quote("check-" + role);
+		content += " id=" + quote(check_mkid(role));
 		content += " name=" + quote(role);
 		content += " onclick=" + quote("check_clicked('" + role + "');");
-		if (app.req_roles.includes(role)) {
-			content += " checked";
-		}
 		content += " /> " + role;
 		content += "<br/>";
 	}
 
 	let sidepanel = document.querySelector(".sidepanel");
 	sidepanel.innerHTML = content;
+}
 
+function check_mkid(role) {
+    return "check-" + role;
+}
+
+function check_id_parse_role(id) {
+    return id.split("-")[1];
 }
 
 function check_clicked(role) {
 	
 	if (app.req_roles.includes(role)) {	
 		app.req_roles = app.req_roles.filter(function(item) {
-				return item !== role;
+		    return item !== role;
 		});
 	} else {
 		app.req_roles.push(role);
 	}
 
 	update_req_roles();
+}
 
+function update_sidepanel() {
+
+	const check_elms = document.querySelectorAll(".check");
+	for (const elm of check_elms) {
+        const role = check_id_parse_role(elm.id);
+		elm.checked = app.req_roles.includes(role);
+	}
 }

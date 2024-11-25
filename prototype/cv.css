@@ -1,6 +1,7 @@
 div, body {
-	font-family:'Times New Roman', Times, serif; 
+	font-family:'Times New Roman', Times, serif;
 	font-size: 16pt;
+	padding: 2px;
 }
 
 .sidepanel {
@@ -27,21 +28,37 @@ div, body {
 	transition: opacity .1s linear, transform .1s linear;
 }
 
-h1 {
-	color: #339;
-	display: inline;
+
+.title {
+	font-size: 18pt;
+	border-bottom: 2px solid #333333;
+	margin-bottom: 4px;
+}
+.section {
+	margin-bottom: 12px;
+	position: relative;
 }
 
-.experience {
-	background-color: #eee;
+.role, .period {
+	background: #eeeeee;
+	padding-left: 4pt;
+	padding-right: 4pt;
+}
+.role {
+	font-weight: bold;
+}
+.period {
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+.company {
+	padding-left: 12pt;
+	font-style: italic;
+	margin-bottom: 3pt;
 }
 
 .project {
-	border-bottom: 2px solid #333;
-	padding-bottom: 4px;
+	padding-left: 18pt;
 }
 
-.workplace {
-	font-weight: bold;
-	padding-bottom: 12px;
-}

@@ -1,20 +1,38 @@
 document.addEventListener("DOMContentLoaded", main);
 
 function main() {
-	
+
 	app = {};
+
+	fix_content();
 
 	collect_dom_tags();
 	create_sidepanel();
 
     set_default_req_tags();
     parse_url_req_tags();
-    
+
 	update_document();
 	update_sidepanel();
     update_url();
-    
+
     /// http://localhost:8080/cv.html?tags=role:prosti,role:pedmed,happy,innnn,return,xxxxx&a=12121
+}
+
+function fix_content() {
+
+	const dot = "•";
+
+	const elms = document.getElementsByTagName("div");
+
+	for (const elm of elms) {
+		if (elm.classList.contains("section")) continue;
+		const trimmed = elm.textContent.trim();
+		if (trimmed.substring(0,1) != "*") {
+			elm.innerHTML = elm.innerHTML.replaceAll("*","<br/>" + dot);
+		}
+	}
+
 }
 
 function collect_dom_tags() {
@@ -27,31 +45,31 @@ function collect_dom_tags() {
 		const tags = elm.attributes["cv"].value.split(",");
 		for (const tag of tags) {
 
-            const kv = parse_tag(tag);
-            const key = kv[0];
-            const value = kv[1];
+	    const kv = parse_tag(tag);
+	    const key = kv[0];
+	    const value = kv[1];
 
 			register_tag(key, value, elm);
-		}		
+		}
 	}
 }
 
 function parse_tag(tag) {
-                
+
     if (tag.includes(":")) {
-        const kv = tag.split(":");
-        key = kv[0].trim();
-        value = kv[1].trim();
+	const kv = tag.split(":");
+	key = kv[0].trim();
+	value = kv[1].trim();
     } else {
-        key = "_tag";
-        value = tag.trim();
+	key = "_tag";
+	value = tag.trim();
     }
 
     return [key, value];
 }
 
 function register_tag(category, tag, elm) {
-	
+
 	if (!(category in app.tags)) app.tags[category] = {};
 	if (!(tag in app.tags[category])) app.tags[category][tag] = [];
 
@@ -70,10 +88,10 @@ function render_sidepanel() {
 	let content = "";
 
     for (const category in app.tags) {
-        content += render_sidepanel_header(category);
-        for (const tag in app.tags[category]) {
-            content += render_sidepanel_item(category, tag);
-        }
+	content += render_sidepanel_header(category);
+	for (const tag in app.tags[category]) {
+	    content += render_sidepanel_item(category, tag);
+	}
 	}
 
     return content;
@@ -85,9 +103,9 @@ function render_sidepanel_header(category) {
 
     content += "<b>";
     if (category[0] == "_") {
-        content += category.substring(1);
+	content += category.substring(1);
     } else {
-        content += category;
+	content += category;
     }
     content += "</b><br/>";
 
@@ -102,9 +120,9 @@ function render_sidepanel_item(category, tag) {
     content += "<input";
     content += " class=" + quote("check");
     if (category[0] == "_") {
-        content += " type=" + quote("checkbox");
+	content += " type=" + quote("checkbox");
     } else {
-        content += " type=" + quote("radio");
+	content += " type=" + quote("radio");
     }
     content += " id=" + quote(widget_id);
     content += " name=" + quote(tag);
@@ -150,32 +168,32 @@ function set_default_req_tags() {
     app.req["_tag"] = [];
 
     for (const category in app.tags) {
-        if (category[0] == "_") continue;
+	if (category[0] == "_") continue;
 
-        for (const tag in app.tags[category]) {
-            register_req(category, tag);
-            break;
-        }
+	for (const tag in app.tags[category]) {
+	    register_req(category, tag);
+	    break;
+	}
 	}
 }
 
-function parse_url_req_tags() {  
+function parse_url_req_tags() {
 
 	const url_params = new URLSearchParams(window.location.search);
 	let tags = url_params.get("tags");
 	if (tags == null) tags = "";
-	
+
 	const tag_list = tags.split(",");
     for (const url_tag of tag_list) {
 
-        let kv = parse_tag(url_tag);
-        const category = kv[0];
-        const tag = kv[1];
+	let kv = parse_tag(url_tag);
+	const category = kv[0];
+	const tag = kv[1];
 
-        if (!(category in app.tags)) continue;
-        if (!(tag in app.tags[category])) continue;
+	if (!(category in app.tags)) continue;
+	if (!(tag in app.tags[category])) continue;
 
-        register_req(category, tag);
+	register_req(category, tag);
     }
 }
 
@@ -186,9 +204,9 @@ function register_req(category, tag) {
     if (!(category in app.req)) append = false;
 
     if (append) {
-        app.req[category].push(tag);
+	app.req[category].push(tag);
     } else {
-        app.req[category] = [tag];
+	app.req[category] = [tag];
     }
 
 }
@@ -202,27 +220,27 @@ function update_document() {
 function update_document_hide_all() {
 
     for (const category in app.tags) {
-        for (const tag in app.tags[category]) {
-            for (let elm of app.tags[category][tag]) {
-                hide_elm(elm);	
-            }
-        }
+	for (const tag in app.tags[category]) {
+	    for (let elm of app.tags[category][tag]) {
+		hide_elm(elm);
+	    }
+	}
     }
 }
 
 function update_document_show_req() {
 
     for (const category in app.req) {
-        for (const tag of app.req[category]) {
-            for (let elm of app.tags[category][tag]) {                
-                show_elm(elm);
-            }
-        }
+	for (const tag of app.req[category]) {
+	    for (let elm of app.tags[category][tag]) {
+		show_elm(elm);
+	    }
+	}
     }
 }
 
 function hide_elm(elm) {
-	
+
 	const old_disp = elm.style.display;
 	if (old_disp == "none") return;
 
@@ -248,35 +266,35 @@ function update_sidepanel() {
 function update_sidepanel_hide_all() {
 
     for (const category in app.tags) {
-        for (const tag in app.tags[category]) {
+	for (const tag in app.tags[category]) {
 
-            const widget_id = widget_mkid(category, tag);
-            elm = document.getElementById(widget_id);
-            elm.checked = false;
-            
-        }
+	    const widget_id = widget_mkid(category, tag);
+	    elm = document.getElementById(widget_id);
+	    elm.checked = false;
+
+	}
     }
 }
 
 function update_sidepanel_show_req() {
 
     for (const category in app.req) {
-        for (const tag of app.req[category]) {
+	for (const tag of app.req[category]) {
 
-            const widget_id = widget_mkid(category, tag);
-            elm = document.getElementById(widget_id);
-            elm.checked = true;
+	    const widget_id = widget_mkid(category, tag);
+	    elm = document.getElementById(widget_id);
+	    elm.checked = true;
 
-        }
+	}
     }
 }
 
 function widget_clicked(category, tag) {
 
     if (category[0] == "_") {
-        widget_clicked_checkbox(category, tag);
+	widget_clicked_checkbox(category, tag);
     } else {
-        widget_clicked_radio(category, tag);
+	widget_clicked_radio(category, tag);
     }
 
     update_document();
@@ -293,11 +311,11 @@ function widget_clicked_radio(category, tag) {
 function widget_clicked_checkbox(category, tag) {
 
     if (app.req[category].includes(tag)) {
-        app.req[category] = app.req[category].filter(
-            function(item) { return item != tag }
-        );  
+	app.req[category] = app.req[category].filter(
+	    function(item) { return item != tag }
+	);
     } else {
-        app.req[category].push(tag);
+	app.req[category].push(tag);
     }
 }
 
@@ -312,7 +330,7 @@ function update_url() {
 	url = url.replaceAll("%2C", ",");
 	url = url.replaceAll("%3A", ":");
 
-	try {		
+	try {
 		history.pushState({}, "", url);
 	} catch (ex) {
 		if (ex instanceof DOMException) {
@@ -328,12 +346,12 @@ function render_taglist() {
     result = "";
 
     for (const category in app.req) {
-        for (const tag of app.req[category]) {
+	for (const tag of app.req[category]) {
 
-            if (result != "") result += ",";
-            if (category[0] != "_") result += category + ":";
-            result += tag;
-        }
+	    if (result != "") result += ",";
+	    if (category[0] != "_") result += category + ":";
+	    result += tag;
+	}
     }
 
     return result;

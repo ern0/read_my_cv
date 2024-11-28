@@ -28,9 +28,42 @@ div, body {
 	transition: opacity .1s linear, transform .1s linear;
 }
 
+.left, .right {
+	position: fixed;
+	top: 0;
+	height: 100%;
+	overflow-y: scroll;
+}
+.left {
+	background: #333333;
+	color: #ffffff;
+	width: 40%;
+    left: 0;
+}
+.right {
+	width: 60%;
+    right: 0;
+}
+.name, .profession {
+        right: 0;
+        text-align: center;
+}
+.name {
+	font-size: 24pt;
+ }
+.profession {
+        font-style: italic;
+}
+.prop {
 
+}
+.intro {
+        padding: 1em;
+        font-style: italic;
+}
 .title {
 	font-size: 18pt;
+	padding-left: 0.5em;
 	border-bottom: 2px solid #333333;
 	margin-bottom: 4px;
 }

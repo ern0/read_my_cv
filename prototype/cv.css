@@ -1,4 +1,6 @@
-div, body {
+html, div, body {
+	padding: 0;
+	margin: 0;
 	font-family:'Times New Roman', Times, serif;
 	font-size: 16pt;
 	padding: 2px;
@@ -41,7 +43,7 @@ div, body {
     left: 0;
 }
 .right {
-	width: 60%;
+	width: 59%;
     right: 0;
 }
 .name, .profession {
@@ -56,6 +58,13 @@ div, body {
 }
 .prop {
 
+}
+.skill {
+	padding-left: 4px;
+}
+.stars {
+	position: absolute;
+	right: 4px;
 }
 .intro {
         padding: 1em;

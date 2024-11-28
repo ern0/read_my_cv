@@ -5,6 +5,7 @@ function main() {
 	app = {};
 
 	fix_content();
+    fix_stars();
 
 	collect_dom_tags();
 	create_sidepanel();
@@ -35,6 +36,15 @@ function fix_content() {
 
 }
 
+function fix_stars() {
+
+	const elms = document.getElementsByTagName("div");
+	for (const elm of elms) {
+		if (!elm.classList.contains("skill")) continue;
+		elm.innerHTML = elm.innerHTML.replace("★","<span class='stars'>★");
+	}
+}
+
 function collect_dom_tags() {
 
 	app.tags = {};
@@ -48,7 +58,6 @@ function collect_dom_tags() {
 	    const kv = parse_tag(tag);
 	    const key = kv[0];
 	    const value = kv[1];
-
 			register_tag(key, value, elm);
 		}
 	}

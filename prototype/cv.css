@@ -56,25 +56,48 @@ html, div, body {
 .profession {
         font-style: italic;
 }
+.props {
+	padding-top: 2em;
+	padding-bottom: 2em;
+}
 .prop {
-
+	text-align: center;
+}
+a, a:hover, a:active, a:visited {
+	color: #ffffff;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+.skillstitle {
+	font-size: 18pt;
+	font-style: italic;
+	padding-left: 0.1em;
+	margin-left: 0.1em;
+	margin-right: 1.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.1em;
+}.skills {
 }
 .skill {
-	padding-left: 4px;
+	padding-left: 0.3em;
 }
 .stars {
 	position: absolute;
-	right: 4px;
+	right: 0.4em;
 }
 .intro {
-        padding: 1em;
+        padding-left: 1em;
+		padding-right: 1em;
         font-style: italic;
 }
 .title {
 	font-size: 18pt;
-	padding-left: 0.5em;
+	padding-left: 0.3em;
 	border-bottom: 2px solid #333333;
-	margin-bottom: 4px;
+	margin-top: 1em;
+	margin-bottom: 0.1em;
 }
 .section {
 	margin-bottom: 12px;

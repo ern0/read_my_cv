@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", main);
 
+
 function main() {
 
 	app = {};
@@ -26,7 +27,8 @@ function fix_content() {
 
 	const elms = document.getElementsByTagName("div");
 
-	for (const elm of elms) {
+	for (var i = 0; i < elms.length; i++) {
+		var elm = elms[i];
 		if (elm.classList.contains("section")) continue;
 		const trimmed = elm.textContent.trim();
 		if (trimmed.substring(0,1) != "*") {
@@ -39,7 +41,8 @@ function fix_content() {
 function fix_stars() {
 
 	const elms = document.getElementsByTagName("div");
-	for (const elm of elms) {
+	for (var i = 0; i < elms.length; i++) {
+		var elm = elms[i];
 		if (!elm.classList.contains("skill")) continue;
 		elm.innerHTML = elm.innerHTML.replace("★","<span class='stars'>★");
 	}
@@ -51,13 +54,15 @@ function collect_dom_tags() {
 
 	const elms = document.querySelectorAll("[cv]");
 
-	for (const elm of elms) {
+	for (var i = 0; i < elms.length; i++) {
+		var elm = elms[i];
 		const tags = elm.attributes["cv"].value.split(",");
-		for (const tag of tags) {
 
-	    const kv = parse_tag(tag);
-	    const key = kv[0];
-	    const value = kv[1];
+		for (var j = 0; j < tags.length; i++) {
+			var tag = elms[i];
+		    const kv = parse_tag(tag);
+	    	const key = kv[0];
+	    	const value = kv[1];
 			register_tag(key, value, elm);
 		}
 	}
@@ -66,12 +71,12 @@ function collect_dom_tags() {
 function parse_tag(tag) {
 
     if (tag.includes(":")) {
-	const kv = tag.split(":");
-	key = kv[0].trim();
-	value = kv[1].trim();
+		const kv = tag.split(":");
+		key = kv[0].trim();
+		value = kv[1].trim();
     } else {
-	key = "_tag";
-	value = tag.trim();
+		key = "_tag";
+		value = tag.trim();
     }
 
     return [key, value];
@@ -88,19 +93,19 @@ function register_tag(category, tag, elm) {
 
 function create_sidepanel() {
 
-	let sidepanel = document.querySelector(".sidepanel");
+	var sidepanel = document.querySelector(".sidepanel");
 	sidepanel.innerHTML = render_sidepanel();
 }
 
 function render_sidepanel() {
 
-	let content = "";
+	var content = "";
 
-    for (const category in app.tags) {
-	content += render_sidepanel_header(category);
-	for (const tag in app.tags[category]) {
-	    content += render_sidepanel_item(category, tag);
-	}
+    for (var category in app.tags) {
+		content += render_sidepanel_header(category);
+		for (const tag in app.tags[category]) {
+			content += render_sidepanel_item(category, tag);
+		}
 	}
 
     return content;

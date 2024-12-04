@@ -1,0 +1,79 @@
+---- name ----
+Zalka Ernő
+Software Engineer #dev
+Test Engineer #test
+
+---- contact ----
+Fót, Hungary
++36 20 973 9213
+mailto:ern0plus4+2024b@gmail.com
+https://github.com/ern0
+
+---- intro ----
+Innovative and dedicated software developer,
+architect and mentor with experience in various fields and roles.
+Focused on long-term goals: quality, maintainability,
+smooth development process. Not only creates clean, modular,
+maintainable code, but inspires and helps others to do the same,
+educates and supports young talents.
+Enjoyed programming since teenager age and still does.
+Actual brain problem: learning Rust, created first crate and
+working on a larger multi-client system.
+
+---- skills ----
+C *****
+C++ ★★★★★
+Python ★★★★★
+Linux Dev ****
+Microservices ★★★★☆
+Embedded Systems ★★★★★
+Rust 3/5
+SQL ★★★★☆
+Key-Value DB ★★★★☆
+PHP ★★★★★
+JavaScript ★★★★☆
+HTML/CSS ★★★★☆
+Java ★★★☆☆
+Assembly, Demoscene ★★★☆☆
+OOP Design ★★★★★
+Documentation ★★★★★
+Multithreading ★★★★☆
+Dataflow Systems ★★★★★
+Unit Testing ★★★★☆
+Integration Testing ★★★★★
+GIT ★★★★★
+Mentoring, Teaching ★★★★☆
+MUMPS ★★★★★
+ERP ★★★★★
+Image Editing, GIMP ★★☆☆☆
+Music Production ★★★★★
+
+---- languages ----
+Hungarian ★★★★★
+English ★★★★☆
+
+---- experience ----
+Test engineer
+2023-2024
+YottaDB LLC, contractor
+
+Work on open-source database platform:
+* Create integration tests [CSH] [Expect] [MUMPS]
+* Implement/fix platform modules [C] [Rust]
+
+---- experience ----
+
+Principal C++ Developer
+2023
+Harman-Kardon Kft.
+
+Maintain automotive modules [C++]
+
+---- experience ----
+
+Principal embedded developer, product validation engineer
+2019-2022
+Heitec Kft.
+Implement healthcare product firmware [C]
+Create end-to-end test framework and tests [Python]
+Create test applications for embedded devices [C] [C++]

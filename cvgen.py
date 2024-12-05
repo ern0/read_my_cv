@@ -8,6 +8,7 @@ class Render:
     def __init__(self):
         self.level = 0
         self.nodes = {}
+        self.need_indent = True
 
     def indent(self):
         self.level += 1
@@ -15,31 +16,35 @@ class Render:
     def undent(self):
         self.level -= 1
 
-    def render(self, text):
-        print("  " * self.level, end="")
+    def text(self, text):
+        if self.need_indent:
+            print("  " * self.level, end="")
+            self.need_indent = False
         print(text, end="")
 
-    def render_eol(self):
-        self.render("\n")
+    def eol(self):
+        self.text("\n")
+        self.need_indent = True
 
-    def node_open(self, node_type, section_type, tag_list):
+    def node_open(self, node_type, section_type, class_list = None):
 
         self.nodes[self.level] = node_type
 
-        self.render("<")
-        self.render(node_type)
+        self.text("<")
+        self.text(node_type)
 
-        self.render(" class=")
-        self.render('"')
-        self.render(section_type)
-        for tag in tag_list:
-            self.render(" ")
-            self.render(tag)
-        self.render('"')
+        self.text(" class=")
+        self.text('"')
+        self.text(section_type)
+        if class_list is not None:
+            for cls in class_list:
+                self.text(" ")
+                self.text(cls)
+        self.text('"')
 
-        self.render(">")
+        self.text(">")
         if node_type == "div":
-            self.render_eol()
+            self.eol()
 
         self.indent()
 
@@ -47,10 +52,10 @@ class Render:
 
         self.undent()
 
-        self.render("</")
-        self.render(self.nodes[self.level])
-        self.render(">")
-        self.render_eol()
+        self.text("</")
+        self.text(self.nodes[self.level])
+        self.text(">")
+        self.eol()
 
 
 class Gen:
@@ -62,7 +67,7 @@ class Gen:
 
         self.open_file()
         self.render = Render()
-        self.load()
+        self.process()
         self.file.close()
 
     def open_file(self):
@@ -87,12 +92,14 @@ class Gen:
         tags = self.line.split("#")
         for index in range(0, len(tags)):
             tags[index] = tags[index].strip()
+            if index > 0:
+                tags[index] = "tag_" + tags[index]
         self.line = tags[0]
         del tags[0]
 
         return tags
 
-    def load(self):
+    def process(self):
 
         for self.line in self.file:
             self.line = self.line.strip()
@@ -100,41 +107,48 @@ class Gen:
                 continue
 
             if self.line.startswith("----"):
-                self.load_section_header()
+                self.proc_section_header()
             else:
-                self.load_section_body()
+                self.proc_section_body()
 
         self.render.node_close()
 
-    def load_section_header(self):
+    def proc_section_header(self):
 
         self.line = self.line.replace("----","").strip()
-        section_tags = self.parse_tags()
-        section_type = self.line
+        self.section_tags = self.parse_tags()
+        self.section_type = self.line
 
         if self.is_first_section:
             self.is_first_section = False
         else:
             self.render.node_close()
-        self.render.node_open("div", section_type, section_tags)
+        self.render.node_open("div", "section_" + self.section_type, self.section_tags)
 
-    def load_section_body(self):
+        self.is_first_line = True
 
-        return
-        tags = self.parse_tags()
+    def proc_section_body(self):
 
-        if not self.section_type in self.raw:
-            self.raw[self.section_type] = {}
-        if not "lines" in self.raw[self.section_type]:
-            self.raw[self.section_type]["lines"] = {}
+        self.tags = self.parse_tags()
 
-        index = len(self.raw[self.section_type]["lines"])
+        if self.section_type == "title":
+            self.proc_title()
+        else:
+            self.render.text(self.line)
+            self.render.eol()
 
-        self.raw[self.section_type]["lines"][index] = {}
-        self.raw[self.section_type]["lines"][index]["data"] = self.line
-        self.raw[self.section_type]["lines"][index]["tags"] = {}
-        for tag in tags:
-            self.raw[self.section_type]["lines"][index]["tags"][tag] = None
+        self.is_first_line = False
+
+    def proc_title(self):
+
+        if self.is_first_line:
+            self.render.node_open("div", "name", self.tags)
+        else:
+            self.render.node_open("div", "position", self.tags)
+
+        self.render.text(self.line)
+        self.render.eol()
+        self.render.node_close()
 
 if __name__ == "__main__":
     Gen().main()

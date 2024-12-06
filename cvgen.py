@@ -26,21 +26,17 @@ class Render:
         self.text("\n")
         self.need_indent = True
 
-    def node_open(self, node_type, section_type, class_list = None):
+    def open(self, node_type, attrib_list = None):
 
         self.nodes[self.level] = node_type
 
         self.text("<")
         self.text(node_type)
 
-        self.text(" class=")
-        self.text('"')
-        self.text(section_type)
-        if class_list is not None:
-            for cls in class_list:
-                self.text(" ")
-                self.text(cls)
-        self.text('"')
+        if attrib_list is not None:
+            for (key, value) in attrib_list:
+                self.text(" " + key + "=")
+                self.text('"' + value + '"')
 
         self.text(">")
         if node_type == "div":
@@ -48,7 +44,48 @@ class Render:
 
         self.indent()
 
-    def node_close(self):
+    def append_tags(self, tag_list):
+
+        class_value = ""
+        if tag_list is not None:
+            for tag in tag_list:
+                class_value += " tag_" + tag
+
+        return class_value
+
+    def open_section(self, node_type, section_type, tag_list = None):
+
+        class_value = "section_" + section_type
+        class_value += self.append_tags(tag_list)
+
+        attr_list = [ ("class", class_value,) ]
+        self.open(node_type, attr_list)
+
+    def open_field(self, node_type, field_type, tag_list):
+
+        class_value = "field_" + field_type
+        class_value += self.append_tags(tag_list)
+
+        attr_list = [ ("class", class_value,) ]
+        self.open(node_type, attr_list)
+
+    def link(self, url):
+
+        text = url
+
+        if "@" in url:
+            if url.startswith("mailto:"):
+                text = url.split(":")[1]
+        else:
+            if not url.startswith("http"):
+                url = "https://" + url
+                text = url
+
+        self.open("a", [ ("href", url) ])
+        self.text(text)
+        self.close_last()
+
+    def close_last(self):
 
         self.undent()
 
@@ -93,7 +130,7 @@ class Gen:
         for index in range(0, len(tags)):
             tags[index] = tags[index].strip()
             if index > 0:
-                tags[index] = "tag_" + tags[index]
+                tags[index] = tags[index]
         self.line = tags[0]
         del tags[0]
 
@@ -111,7 +148,7 @@ class Gen:
             else:
                 self.proc_section_body()
 
-        self.render.node_close()
+        self.render.close_last()
 
     def proc_section_header(self):
 
@@ -122,8 +159,8 @@ class Gen:
         if self.is_first_section:
             self.is_first_section = False
         else:
-            self.render.node_close()
-        self.render.node_open("div", "section_" + self.section_type, self.section_tags)
+            self.render.close_last()
+        self.render.open_section("div", self.section_type, self.section_tags)
 
         self.is_first_line = True
 
@@ -133,6 +170,8 @@ class Gen:
 
         if self.section_type == "title":
             self.proc_title()
+        if self.section_type == "contact":
+            self.proc_contact()
         else:
             self.render.text(self.line)
             self.render.eol()
@@ -142,13 +181,35 @@ class Gen:
     def proc_title(self):
 
         if self.is_first_line:
-            self.render.node_open("div", "name", self.tags)
+            self.render.open_field("div", "name", self.tags)
         else:
-            self.render.node_open("div", "position", self.tags)
+            self.render.open_field("div", "position", self.tags)
 
         self.render.text(self.line)
         self.render.eol()
-        self.render.node_close()
+        self.render.close_last()
+
+    def proc_contact(self):
+
+        contact_type = "phone"
+        for char in self.line:
+            if char not in "1234567890+-/. ":
+                contact_type = "address"
+
+        if "@" in self.line or self.line.startswith("mailto:"):
+            contact_type = "email"
+        if "github.com" in self.line:
+            contact_type = "github"
+
+        self.render.open_field("div", contact_type, self.tags)
+
+        if contact_type == "email" or contact_type == "github":
+            self.render.link(self.line)
+        else:
+            self.render.text(self.line)
+            self.render.eol()
+
+        self.render.close_last()
 
 if __name__ == "__main__":
     Gen().main()

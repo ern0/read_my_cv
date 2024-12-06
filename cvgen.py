@@ -26,7 +26,7 @@ class Render:
         self.text("\n")
         self.need_indent = True
 
-    def open(self, node_type, attrib_list = None):
+    def open(self, node_type, attrib_list = None, single_shot = False):
 
         self.nodes[self.level] = node_type
 
@@ -38,11 +38,14 @@ class Render:
                 self.text(" " + key + "=")
                 self.text('"' + value + '"')
 
+        if single_shot:
+            self.text("/")
         self.text(">")
         if node_type == "div":
             self.eol()
 
-        self.indent()
+        if not single_shot:
+            self.indent()
 
     def append_tags(self, tag_list):
 
@@ -84,6 +87,11 @@ class Render:
         self.open("a", [ ("href", url) ])
         self.text(text)
         self.close_last()
+
+    def img(self, file, cls):
+
+        attrib_list = [ ("src", file,), ("class", cls,) ]
+        self.open("img", attrib_list, True)
 
     def close_last(self):
 
@@ -202,6 +210,8 @@ class Gen:
             contact_type = "github"
 
         self.render.open_field("div", contact_type, self.tags)
+
+        self.render.img("img/" + contact_type + ".png", "contact")
 
         if contact_type == "email" or contact_type == "github":
             self.render.link(self.line)

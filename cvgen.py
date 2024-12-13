@@ -39,7 +39,7 @@ class Render:
                 self.text('"' + value + '"')
 
         if single_shot:
-            self.text("/")
+            self.text(" /")
         self.text(">")
         if node_type == "div":
             self.eol()
@@ -152,13 +152,13 @@ class Gen:
                 continue
 
             if self.line.startswith("----"):
-                self.proc_section_header()
+                self.proc_header()
             else:
-                self.proc_section_body()
+                self.proc_body()
 
         self.render.close_last()
 
-    def proc_section_header(self):
+    def proc_header(self):
 
         self.line = self.line.replace("----","").strip()
         self.section_tags = self.parse_tags()
@@ -172,21 +172,26 @@ class Gen:
 
         self.is_first_line = True
 
-    def proc_section_body(self):
+    def proc_body(self):
 
         self.tags = self.parse_tags()
 
         if self.section_type == "title":
-            self.proc_title()
-        if self.section_type == "contact":
-            self.proc_contact()
-        else:
-            self.render.text(self.line)
-            self.render.eol()
+            self.proc_item_title()
+        elif self.section_type == "contact":
+            self.proc_item_contact()
+        elif self.section_type == "skills":
+            self.proc_item_skills_langs()
+        elif self.section_type == "languages":
+            self.proc_item_skills_langs()
+        elif self.section_type == "intro":
+            self.proc_item_intro()
+
+        #TODO continue
 
         self.is_first_line = False
 
-    def proc_title(self):
+    def proc_item_title(self):
 
         if self.is_first_line:
             self.render.open_field("div", "name", self.tags)
@@ -197,7 +202,22 @@ class Gen:
         self.render.eol()
         self.render.close_last()
 
-    def proc_contact(self):
+    def proc_item_contact(self):
+
+        contact_type = self.get_contact_type()
+        self.render.open_field("div", contact_type, self.tags)
+
+        self.render.img("img/" + contact_type + ".png", "feature_contact_icon")
+
+        if contact_type == "email" or contact_type == "github":
+            self.render.link(self.line)
+        else:
+            self.render.text(self.line)
+            self.render.eol()
+
+        self.render.close_last()
+
+    def get_contact_type(self):
 
         contact_type = "phone"
         for char in self.line:
@@ -209,17 +229,40 @@ class Gen:
         if "github.com" in self.line:
             contact_type = "github"
 
-        self.render.open_field("div", contact_type, self.tags)
+        return contact_type
 
-        self.render.img("img/" + contact_type + ".png", "contact")
+    def proc_item_skills_langs(self):
 
-        if contact_type == "email" or contact_type == "github":
-            self.render.link(self.line)
-        else:
-            self.render.text(self.line)
-            self.render.eol()
+        self.render.open_field("div", self.section_type, self.tags)
+
+        (skill, stars,) = self.split_skill()
+        self.render.text(skill)
+        self.render.open("span", [("class", "feature_stars",)])
+        self.render.text(stars)
+        self.render.close_last()
 
         self.render.close_last()
+
+    def split_skill(self):
+
+        words = self.line.split(" ")
+        stars_index = len(words) - 1
+        stars = words[stars_index]
+        del words[stars_index]
+        skill = " ".join(words)
+
+        if stars[0] == "*":
+            count = len(stars)
+            stars = "★" * count
+            if count < 5:
+                stars += "☆" * (5 - count)
+
+        return (skill, stars,)
+
+    def proc_item_intro(self):
+        self.render.text(self.line)
+        self.render.eol()
+        return
 
 if __name__ == "__main__":
     Gen().main()

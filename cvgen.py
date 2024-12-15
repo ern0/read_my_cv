@@ -171,6 +171,7 @@ class Gen:
         self.render.open_section("div", self.section_type, self.section_tags)
 
         self.is_first_line = True
+        self.exp_features = {}
 
     def proc_body(self):
 
@@ -186,8 +187,8 @@ class Gen:
             self.proc_item_skills_langs()
         elif self.section_type == "intro":
             self.proc_item_intro()
-
-        #TODO continue
+        elif self.section_type == "experience":
+            self.proc_item_experience()
 
         self.is_first_line = False
 
@@ -263,6 +264,53 @@ class Gen:
         self.render.text(self.line)
         self.render.eol()
         return
+
+    def proc_item_experience(self):
+
+        if self.line == "":
+            return
+
+        if len(self.exp_features) < 3:
+            self.proc_item_exp_header()
+        else:
+            self.proc_item_exp_body()
+
+    def proc_item_exp_header(self):
+
+        feat = "period"
+
+        for char in self.line:
+            if char not in "1234567890-":
+                feat = "position"
+
+        chk = self.line.lower().replace(".", "")
+        for company_form in ("kft", "rt", "llc", "ltd"):
+            if (" " + company_form) in chk:
+                feat = "company"
+                break
+
+        self.exp_features[feat] = None
+
+        self.render.open_field("div", feat, self.tags)
+        self.render.text(self.line)
+        self.render.eol()
+        self.render.close_last()
+
+    def proc_item_exp_body(self):
+
+        text = self.line
+        text = text.replace("[", "<span class=\"lang\">")
+        text = text.replace("]", "</span>")
+
+        node = "div"
+        if text[0] == "*":
+            text = text[1:].strip()
+            node = "li"
+
+        self.render.open_field(node, "expitem", self.tags)
+        self.render.text(text)
+        self.render.eol()
+        self.render.close_last()
 
 if __name__ == "__main__":
     Gen().main()

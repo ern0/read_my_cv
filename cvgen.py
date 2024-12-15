@@ -146,6 +146,8 @@ class Gen:
 
     def process(self):
 
+        self.render_html_pre()
+
         for self.line in self.file:
             self.line = self.line.strip()
             if self.line == "":
@@ -156,7 +158,29 @@ class Gen:
             else:
                 self.proc_body()
 
-        self.render.close_last()
+        self.render_html_post()
+
+    def render_html_pre(self):
+
+        for node in ("html", "head", "body"):
+
+            self.render.open(node)
+            self.render.eol()
+
+            if node == "head":
+                self.render.open("meta", [("charset", "UTF-8",)], True)
+                self.render.eol()
+                self.render.open("link", [("rel", "stylesheet",), ("href", "cv.css",)])
+                self.render.close_last()
+                self.render.open("script", [("src", "script.js",)])
+                self.render.close_last()
+                self.render.close_last()
+
+
+    def render_html_post(self):
+
+        for i in range(3):
+            self.render.close_last()
 
     def proc_header(self):
 

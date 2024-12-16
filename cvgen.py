@@ -58,7 +58,7 @@ class Render:
 
     def open_section(self, node_type, section_type, tag_list = None):
 
-        class_value = "section_" + section_type
+        class_value = "section section_" + section_type
         class_value += self.append_tags(tag_list)
 
         attr_list = [ ("class", class_value,) ]
@@ -66,7 +66,7 @@ class Render:
 
     def open_field(self, node_type, field_type, tag_list):
 
-        class_value = "field_" + field_type
+        class_value = "field field_" + field_type
         class_value += self.append_tags(tag_list)
 
         attr_list = [ ("class", class_value,) ]
@@ -107,6 +107,7 @@ class Gen:
 
     def __init__(self):
         self.is_first_section = True
+        self.is_sections_rendered = {}
 
     def main(self):
 
@@ -203,10 +204,37 @@ class Gen:
             self.render.close_last()
             self.render.open("div", [("class", "side side_right",)])
 
+        self.render_title()
+
         self.render.open_section("div", self.section_type, self.section_tags)
 
         self.is_first_line = True
         self.exp_features = {}
+
+    def render_title(self):
+
+        word = None
+
+        if self.section_type == "skills":
+            word = "Skills"
+        if self.section_type == "languages":
+            word = "Languages"
+        if self.section_type == "experience":
+            word = "Experience"
+        if self.section_type == "education":
+            word = "Education"
+
+        if word is None:
+            return
+        if word in self.is_sections_rendered:
+            return
+
+        self.is_sections_rendered[word] = None
+
+        self.render.open("div",[("class", "title")])
+        self.render.text(word)
+        self.render.eol()
+        self.render.close_last()
 
     def proc_body(self):
 

@@ -1,11 +1,13 @@
 html, div, body {
+	z-index: 0;
 	padding: 0;
 	margin: 0;
 	font-family:'Times New Roman', Times, serif;
-	font-size: 16pt;
+	font-size: 2.5vw;
 }
 
 .sidepanel {
+	z-index: 9;
 	background-color: #fed;
 	opacity: 10%;
 	border-left: 2px solid #987;
@@ -30,14 +32,69 @@ html, div, body {
 }
 
 .side {
-	width: 50%;
 	position: absolute;
+	top: 0;
+	padding: 1vw;
+	margin: 0;
+	padding: 0;
 }
-
 .side_left {
+	width: 40%;
 	left: 0;
+	background: #333333;
+	color: white;
+}
+.side_right {
+	width: 60%;
+	right: 0;
+	background: rgb(214, 64, 64);
+	color: black;
 }
 
-.side_right {
-	right: 0;
+.title {
+	font-size: 3vw;
+	margin-left: 1vw;
+}
+.section {
+	padding: 0 1vw 0 1.0vw;
+}
+.field {
+	padding-left: 1.2vw;
+}
+.field_name {
+	font-size: 5vw;
+}
+.field_position {
+	font-style: italic;
+}
+
+.section_title {
+	text-align: center;
+	margin-bottom: 2vw;
+}
+
+.section_contact {
+	margin-bottom: 3vw;
+}
+.section_contact div,
+.section_contact a,
+.section_contact a:hover,
+.section_contact a:active,
+.section_contact a:visited {
+	color: #ffffff;
+}
+.field_address {}
+.field_phone {}
+.field_email {}
+.field_github {}
+.feature_contact_icon {
+	width: 3vw;
+	position: relative;
+	top: 0.8vw;
+	margin-right: 1.3vw;
+	margin-left: -1.0vw;
+}
+
+.section_skills {
+	margin-bottom: 2vw;
 }

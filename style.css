@@ -98,3 +98,17 @@ html, div, body {
 .section_skills {
 	margin-bottom: 2vw;
 }
+.field_skills {
+	padding: 0;
+}
+.feature_skill {
+	padding-bottom: 1.0vw;
+	padding-left: 0.4vw;
+}
+.feature_black_star {
+	color: #333333;
+}
+.feature_stars {
+	position: absolute;
+	right: 0.7vw;
+}

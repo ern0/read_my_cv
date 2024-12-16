@@ -300,7 +300,14 @@ class Gen:
         self.render.open_field("div", self.section_type, self.tags)
 
         (skill, stars,) = self.split_skill()
+
+        self.render.open("span", [("class", "feature_skill",)])
         self.render.text(skill)
+        self.render.open("span", [("class", "feature_black_star",)])
+        self.render.text("★")
+        self.render.close_last()
+        self.render.close_last()
+
         self.render.open("span", [("class", "feature_stars",)])
         self.render.text(stars)
         self.render.close_last()

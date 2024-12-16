@@ -1,0 +1,43 @@
+html, div, body {
+	padding: 0;
+	margin: 0;
+	font-family:'Times New Roman', Times, serif;
+	font-size: 16pt;
+}
+
+.sidepanel {
+	background-color: #fed;
+	opacity: 10%;
+	border-left: 2px solid #987;
+	border-top: 2px solid #987;
+	border-bottom: 2px solid #987;
+	border-right: none;
+	border-top-left-radius: 12px;
+	border-bottom-left-radius: 12px;
+	padding: 9px;
+	position: fixed;
+	top: 5%;
+	right: 0;
+
+	transform: translateX(calc(100% - 20px));
+	transition: opacity .9s ease .4s, transform .9s ease .4s;
+}
+.sidepanel:hover {
+	transform: translateX(0);
+
+	opacity: 90%;
+	transition: opacity .1s linear, transform .1s linear;
+}
+
+.side {
+	width: 50%;
+	position: absolute;
+}
+
+.side_left {
+	left: 0;
+}
+
+.side_right {
+	right: 0;
+}

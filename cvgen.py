@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import sys
-
+import time
 
 class Render:
 
@@ -170,16 +170,22 @@ class Gen:
             if node == "head":
                 self.render.open("meta", [("charset", "UTF-8",)], True)
                 self.render.eol()
-                self.render.open("link", [("rel", "stylesheet",), ("href", "cv.css",)])
+                self.render.open("link", [("rel", "stylesheet",), ("href", "style.css")])
                 self.render.close_last()
                 self.render.open("script", [("src", "script.js",)])
                 self.render.close_last()
                 self.render.close_last()
 
+        self.render.open("div", [("class", "sidepanel",)])
+        self.render.text("side")
+        self.render.eol()
+        self.render.close_last()
+
+        self.render.open("div", [("class", "side side_left",)])
 
     def render_html_post(self):
 
-        for i in range(3):
+        for i in range(4):
             self.render.close_last()
 
     def proc_header(self):
@@ -192,6 +198,11 @@ class Gen:
             self.is_first_section = False
         else:
             self.render.close_last()
+
+        if self.section_type == "intro":
+            self.render.close_last()
+            self.render.open("div", [("class", "side side_right",)])
+
         self.render.open_section("div", self.section_type, self.section_tags)
 
         self.is_first_line = True

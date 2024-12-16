@@ -2,11 +2,9 @@ document.addEventListener("DOMContentLoaded", main);
 
 
 function main() {
+	return; ////////////////////////////////////
 
 	app = {};
-
-	fix_content();
-    fix_stars();
 
 	collect_dom_tags();
 	create_sidepanel();
@@ -19,33 +17,6 @@ function main() {
     update_url();
 
     /// http://localhost:8080/cv.html?tags=role:prosti,role:pedmed,happy,innnn,return,xxxxx&a=12121
-}
-
-function fix_content() {
-
-	const dot = "•";
-
-	const elms = document.getElementsByTagName("div");
-
-	for (var i = 0; i < elms.length; i++) {
-		var elm = elms[i];
-		if (elm.classList.contains("section")) continue;
-		const trimmed = elm.textContent.trim();
-		if (trimmed.substring(0,1) != "*") {
-			elm.innerHTML = elm.innerHTML.replaceAll("*","<br/>" + dot);
-		}
-	}
-
-}
-
-function fix_stars() {
-
-	const elms = document.getElementsByTagName("div");
-	for (var i = 0; i < elms.length; i++) {
-		var elm = elms[i];
-		if (!elm.classList.contains("skill")) continue;
-		elm.innerHTML = elm.innerHTML.replace("★","<span class='stars'>★");
-	}
 }
 
 function collect_dom_tags() {

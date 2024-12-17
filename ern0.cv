@@ -71,9 +71,9 @@ Maintain automotive modules [C++]
 
 ---- experience ----
 
-Principal embedded developer, product validation engineer
-2019-2022
-Heitec Kft.
-Implement healthcare product firmware [C]
-Create end-to-end test framework and tests [Python]
-Create test applications for embedded devices [C] [C++]
+Principal embedded developer, product validation engineer #f1
+2019-2022 #f2
+Heitec Kft. #f3
+Implement healthcare product firmware [C] #a
+Create end-to-end test framework and tests [Python] #b
+Create test applications for embedded devices [C] [C++] #c

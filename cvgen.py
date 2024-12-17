@@ -26,7 +26,7 @@ class Render:
         self.text("\n")
         self.need_indent = True
 
-    def open(self, node_type, attrib_list = None, single_shot = False):
+    def open(self, node_type, attrib_list = None, single_shot = False, no_eol = False):
 
         self.nodes[self.level] = node_type
 
@@ -41,8 +41,9 @@ class Render:
         if single_shot:
             self.text(" /")
         self.text(">")
-        if node_type == "div":
-            self.eol()
+        if node_type != "span":
+            if not no_eol:
+                self.eol()
 
         if not single_shot:
             self.indent()
@@ -64,13 +65,13 @@ class Render:
         attr_list = [ ("class", class_value,) ]
         self.open(node_type, attr_list)
 
-    def open_field(self, node_type, field_type, tag_list):
+    def open_field(self, node_type, field_type, tag_list, no_eol=False):
 
         class_value = "field field_" + field_type
         class_value += self.append_tags(tag_list)
 
         attr_list = [ ("class", class_value,) ]
-        self.open(node_type, attr_list)
+        self.open(node_type, attr_list, no_eol=no_eol)
 
     def link(self, url):
 
@@ -93,14 +94,16 @@ class Render:
         attrib_list = [ ("src", file,), ("class", cls,) ]
         self.open("img", attrib_list, True)
 
-    def close_last(self):
+    def close_last(self, no_eol=False):
 
         self.undent()
 
         self.text("</")
         self.text(self.nodes[self.level])
         self.text(">")
-        self.eol()
+
+        if not no_eol:
+            self.eol()
 
 
 class Gen:
@@ -108,6 +111,7 @@ class Gen:
     def __init__(self):
         self.is_first_section = True
         self.is_sections_rendered = {}
+        self.is_exp_close_needed = False
 
     def main(self):
 
@@ -186,10 +190,14 @@ class Gen:
 
     def render_html_post(self):
 
+        self.close_exp_header_if_needed()
+
         for i in range(4):
             self.render.close_last()
 
     def proc_header(self):
+
+        self.close_exp_header_if_needed()
 
         self.line = self.line.replace("----","").strip()
         self.section_tags = self.parse_tags()
@@ -348,7 +356,7 @@ class Gen:
     def proc_item_exp_header(self):
 
         feat = self.proc_item_exp_header_get_type()
-        text = self.proc_item_exp_header_normalize_period()
+        text = self.proc_item_exp_header_normalize_period(feat)
         self.exp_features[feat] = (text, self.tags,)
         if len(self.exp_features) == 3:
             self.proc_item_exp_header_render()
@@ -359,7 +367,7 @@ class Gen:
 
         for char in self.line:
             if char not in "1234567890-":
-                feat = "position"
+                feat = "role"
 
         chk = self.line.lower().replace(".", "")
         for company_form in ("kft", "rt", "llc", "ltd"):
@@ -369,23 +377,47 @@ class Gen:
 
         return feat
 
-    def proc_item_exp_header_normalize_period(self):
+    def proc_item_exp_header_normalize_period(self, feat):
 
         text = self.line
 
-        if self.section_type == "period":
-            text = text.replace("-", " &ndash;<br/>&nbsp;&ndash; ")
+        if feat == "period":
+            text = text.replace("-", "&nbsp;&ndash;<br/>&ndash;&nbsp;")
+
+        if feat == "company":
+            text = "&nbsp;&ndash;&nbsp;" + text
 
         return text
 
     def proc_item_exp_header_render(self):
 
-        for feat in ("period", "position", "company"):
-            (text, tags,) = self.exp_features[feat]
+        self.render.open("table", [("class", "exp_table",)])
+        self.render.open("tr", [("class", "exp_tr",)])
+        self.render.open("td", [("class", "exp_td_left",)])
+        self.proc_item_ex_header_render_field("period")
+        self.render.close_last()
 
-            self.render.open_field("div", feat, tags)
-            self.render.text(text)
-            self.render.eol()
+        self.render.open("td", [("class", "exp_td_right",)])
+        self.render.open("div", [("class", "exp_heading",)])
+        self.proc_item_ex_header_render_field("role", no_eol=True)
+        self.proc_item_ex_header_render_field("company")
+        self.render.close_last()
+        self.is_exp_close_needed = True
+
+    def proc_item_ex_header_render_field(self, field, no_eol=False):
+
+        (text, tags,) = self.exp_features[field]
+        self.render.open_field("span", field, tags)
+        self.render.text(text)
+        self.render.close_last(no_eol=no_eol)
+
+    def close_exp_header_if_needed(self):
+
+        if not self.is_exp_close_needed:
+            return
+        self.is_exp_close_needed = False
+
+        for i in range(3):
             self.render.close_last()
 
     def proc_item_exp_body(self):
@@ -395,11 +427,13 @@ class Gen:
         text = text.replace("]", "</span>")
 
         node = "div"
+        tag = "expitem"
         if text[0] == "*":
             text = text[1:].strip()
             node = "li"
+            tag = "expbullet"
 
-        self.render.open_field(node, "expitem", self.tags)
+        self.render.open_field(node, tag, self.tags)
         self.render.text(text)
         self.render.eol()
         self.render.close_last()

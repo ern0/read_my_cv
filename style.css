@@ -1,4 +1,4 @@
-html, div, body {
+html, body, div, td, li {
 	z-index: 0;
 	padding: 0;
 	margin: 0;
@@ -59,7 +59,6 @@ html, div, body {
 	padding: 0 1vw 0 1.0vw;
 }
 .field {
-	padding-left: 1.2vw;
 }
 .field_name {
 	font-size: 5vw;
@@ -92,7 +91,7 @@ html, div, body {
 	position: relative;
 	top: 0.8vw;
 	margin-right: 1.3vw;
-	margin-left: -1.0vw;
+	margin-left: 0.2vw;
 }
 
 .section_skills {
@@ -120,23 +119,47 @@ html, div, body {
 }
 
 .section_experience {
-
+	margin: 0.5vw 0 0.5vw 0;
 }
 .exp_table {
+	width: 100%;
 }
-.exp_tr {
-}
+.exp_tr {}
 .exp_td_left {
-}
-.exp_td_right {
+	padding: 0 0.5vw 0 0.5vw;
+
+	vertical-align: top;
+	width: 12%;
 }
 .field_period {
-	height: 100%;
-	width: 20%;
+	width: 100%;
 }
-.field_position {
+.exp_td_right {
+	padding: 0 0.5vw 0.4vw 0.9vw;
+}
+.exp_heading {
+	margin-bottom: 1.0vw;
+}
+.field_role {
+	font-weight: bold;
 }
 .field_company {
+	font-style: italic;
 }
 .field_expitem {
+	margin-top: 0.5vw;
+}
+.field_expbullet {
+	margin-top: 0.2vw;
+	list-style-position: outside;
+}
+.lang {
+	font-family: monospace;
+	font-size: 2.0vw;
+	border: 1px solid #aaaaaa;
+	border-radius: 0.7vw;
+	background: #eeeeee;
+	color: #666666;
+	padding: 0 0.7vw 0 0.7vw;
+	margin-right: 0.2vw;
 }

@@ -112,6 +112,9 @@ class Gen:
         self.is_first_section = True
         self.is_sections_rendered = {}
         self.is_exp_close_needed = False
+        self.is_ul_close_needed = False
+        self.is_intro_first_line = True
+        self.is_intro_open_para = True
 
     def main(self):
 
@@ -155,10 +158,10 @@ class Gen:
 
         for self.line in self.file:
             self.line = self.line.strip()
-            if self.line == "":
-                continue
 
             if self.line.startswith("----"):
+                if self.line == "":
+                    continue
                 self.proc_header()
             else:
                 self.proc_body()
@@ -170,11 +173,9 @@ class Gen:
         for node in ("html", "head", "body"):
 
             self.render.open(node)
-            self.render.eol()
 
             if node == "head":
                 self.render.open("meta", [("charset", "UTF-8",)], True)
-                self.render.eol()
                 self.render.open("link", [("rel", "stylesheet",), ("href", "style.css")])
                 self.render.close_last()
                 self.render.open("script", [("src", "script.js",)])
@@ -190,6 +191,7 @@ class Gen:
 
     def render_html_post(self):
 
+        self.close_exp_ul_if_needed()
         self.close_exp_header_if_needed()
 
         for i in range(4):
@@ -197,6 +199,7 @@ class Gen:
 
     def proc_header(self):
 
+        self.close_exp_ul_if_needed()
         self.close_exp_header_if_needed()
 
         self.line = self.line.replace("----","").strip()
@@ -248,6 +251,12 @@ class Gen:
 
         self.tags = self.parse_tags()
 
+        if self.section_type == "intro":
+            self.proc_item_intro()
+
+        if self.line == "":
+            return
+
         if self.section_type == "title":
             self.proc_item_title()
         elif self.section_type == "contact":
@@ -256,8 +265,6 @@ class Gen:
             self.proc_item_skills_langs()
         elif self.section_type == "languages":
             self.proc_item_skills_langs()
-        elif self.section_type == "intro":
-            self.proc_item_intro()
         elif self.section_type == "experience":
             self.proc_item_experience()
 
@@ -339,6 +346,21 @@ class Gen:
         return (skill, stars,)
 
     def proc_item_intro(self):
+
+        if self.line == "":
+            if self.is_intro_first_line:
+                return
+
+            self.render.close_last()
+            self.is_intro_open_para = True
+            return
+
+        self.is_intro_first_line = False
+
+        if self.is_intro_open_para:
+                self.is_intro_open_para = False
+                self.render.open("div", [("class", "para_intro",)])
+
         self.render.text(self.line)
         self.render.eol()
         return
@@ -411,6 +433,14 @@ class Gen:
         self.render.text(text)
         self.render.close_last(no_eol=no_eol)
 
+    def close_exp_ul_if_needed(self):
+
+        if not self.is_ul_close_needed:
+            return
+        self.is_ul_close_needed = False
+
+        self.render.close_last()
+
     def close_exp_header_if_needed(self):
 
         if not self.is_exp_close_needed:
@@ -432,6 +462,9 @@ class Gen:
             text = text[1:].strip()
             node = "li"
             tag = "expbullet"
+            if not self.is_ul_close_needed:
+                self.is_ul_close_needed = True
+                self.render.open("ul", [("class", "exp_ul",)])
 
         self.render.open_field(node, tag, self.tags)
         self.render.text(text)

@@ -3,7 +3,7 @@ html, body, div, td, li {
 	padding: 0;
 	margin: 0;
 	font-family:'Times New Roman', Times, serif;
-	font-size: 2.5vw;
+	font-size: 2.1vw;
 }
 
 .sidepanel {
@@ -52,6 +52,7 @@ html, body, div, td, li {
 }
 
 .title {
+	font-style: italic;
 	font-size: 3vw;
 	margin-left: 1vw;
 }
@@ -65,6 +66,7 @@ html, body, div, td, li {
 }
 .field_position {
 	font-style: italic;
+	font-size: 2.8vw;
 }
 
 .section_title {
@@ -81,13 +83,18 @@ html, body, div, td, li {
 .section_contact a:active,
 .section_contact a:visited {
 	color: #ffffff;
+	text-decoration: none;
 }
+.section_contact a:hover,
+.section_contact a:active {
+	text-decoration: underline;
+}}
 .field_address {}
 .field_phone {}
 .field_email {}
 .field_github {}
 .feature_contact_icon {
-	width: 3vw;
+	width: 2.5vw;
 	position: relative;
 	top: 0.8vw;
 	margin-right: 1.3vw;
@@ -116,6 +123,8 @@ html, body, div, td, li {
 	text-indent: 0.5vw;
 	text-align: justify;
 	margin: 1.0vw 1.1vw 1.0vw 0;
+}
+.para_intro {
 }
 
 .section_experience {
@@ -149,17 +158,21 @@ html, body, div, td, li {
 .field_expitem {
 	margin-top: 0.5vw;
 }
+.exp_ul {
+	margin: 0;
+	padding: 0 0 0 2.8vw;
+}
 .field_expbullet {
 	margin-top: 0.2vw;
 	list-style-position: outside;
 }
 .lang {
 	font-family: monospace;
-	font-size: 2.0vw;
+	font-size: 1.5vw;
 	border: 1px solid #aaaaaa;
 	border-radius: 0.7vw;
 	background: #eeeeee;
 	color: #666666;
-	padding: 0 0.7vw 0 0.7vw;
-	margin-right: 0.2vw;
+	padding: 0 0.6vw 0 0.6vw;
+	margin-right: -0.2vw;
 }

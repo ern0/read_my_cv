@@ -347,6 +347,14 @@ class Gen:
 
     def proc_item_exp_header(self):
 
+        feat = self.proc_item_exp_header_get_type()
+        text = self.proc_item_exp_header_normalize_period()
+        self.exp_features[feat] = (text, self.tags,)
+        if len(self.exp_features) == 3:
+            self.proc_item_exp_header_render()
+
+    def proc_item_exp_header_get_type(self):
+
         feat = "period"
 
         for char in self.line:
@@ -359,12 +367,26 @@ class Gen:
                 feat = "company"
                 break
 
-        self.exp_features[feat] = None
+        return feat
 
-        self.render.open_field("div", feat, self.tags)
-        self.render.text(self.line)
-        self.render.eol()
-        self.render.close_last()
+    def proc_item_exp_header_normalize_period(self):
+
+        text = self.line
+
+        if self.section_type == "period":
+            text = text.replace("-", " &ndash;<br/>&nbsp;&ndash; ")
+
+        return text
+
+    def proc_item_exp_header_render(self):
+
+        for feat in ("period", "position", "company"):
+            (text, tags,) = self.exp_features[feat]
+
+            self.render.open_field("div", feat, tags)
+            self.render.text(text)
+            self.render.eol()
+            self.render.close_last()
 
     def proc_item_exp_body(self):
 

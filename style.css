@@ -47,7 +47,7 @@ html, div, body {
 .side_right {
 	width: 60%;
 	right: 0;
-	background: rgb(214, 64, 64);
+	background: #ffffff;
 	color: black;
 }
 
@@ -111,4 +111,32 @@ html, div, body {
 .feature_stars {
 	position: absolute;
 	right: 0.7vw;
+}
+
+.section_intro {
+	text-indent: 0.5vw;
+	text-align: justify;
+	margin: 1.0vw 1.1vw 1.0vw 0;
+}
+
+.section_experience {
+
+}
+.exp_table {
+}
+.exp_tr {
+}
+.exp_td_left {
+}
+.exp_td_right {
+}
+.field_period {
+	height: 100%;
+	width: 20%;
+}
+.field_position {
+}
+.field_company {
+}
+.field_expitem {
 }

@@ -65,7 +65,6 @@ Work on open-source database platform:
 * Implement/fix platform modules [C] [Rust]
 
 ---- experience ----
-
 Principal C++ Developer
 2023
 Harman-Kardon Kft.
@@ -73,10 +72,84 @@ Harman-Kardon Kft.
 Maintain automotive modules [C++]
 
 ---- experience ----
+2022−2023
+Principal C Developer
+AI Fleet (USA-HU startup)
 
-Principal embedded developer, product validation engineer #f1
-2019-2022 #f2
-Heitec Kft. #f3
-Implement healthcare product firmware [C] #a
-Create end-to-end test framework and tests [Python] #b
-Create test applications for embedded devices [C] [C++] #c
+Create USA route map cache (C, Python, AWS)
+Optimize solver algorithm (C)
+
+---- experience ----
+
+2019−2022
+Embedded Systems Developer
+Heitec Kft
+
+Test framework for testing the company’s own manufactured PC [Python]
+Create test applications for embedded devices [C] [C++]
+Implement healthcare product firmware [C]
+
+---- experience ----
+
+2017−2019
+Principal C++ Developer
+CAE Engineering Kft
+
+Implement flight simulator functions (C++)
+Design and implement tools (Python)
+
+---- experience ----
+
+2016−2017
+Full-Stack Developer, Quality Lead
+EcoStudio Kft
+
+Build microservices architecture application and
+tests [Node.js] [RabbitMQ] [Haxe] [RethinkDB]
+
+---- experience ----
+
+2013−2016
+Senior Full-Stack Developer
+Netavis Kft
+
+Mobile-first web app for video monitoring system
+
+---- experience ----
+
+2011−2013
+Senior Embedded and Systems Developer
+Intep Kft
+
+Outdoor LED wall firmware, font, autokerning renderer
+Payment kiosk firmware, GUI [JavaScript]
+Modular datasheet creator system [PHP]
+
+---- experience ----
+
+2006−2011
+Systems Architect, Developer
+Porion Kft, Bitklub Kft
+
+Digital television (DVB) SI/EPG inserter [C++], admin UI [HTML]
+Hierarchical web form editor framework [PHP]
+Home automation-purpose dataflow sytem prototype
+Collaborative spreadsheet concept and prototype
+
+---- experience ----
+
+2000−2006
+Full-Stack Developer, SEO expert, CTO
+Index.hu Rt, Rakit Kft, Well-Press Kft
+
+Design, implement, SEO and run touristic portal [PHP]
+Create GUI tool for measuring SEO results [Java]
+Implement simple ad server [PHP]
+
+---- education ----
+
+Széchenyi István Egyetem, Győr
+Software Developer
+
+Deák Ferenc SZKI, Győr
+IT System Organizer

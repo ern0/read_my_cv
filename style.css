@@ -5,7 +5,9 @@ html, body, div, td, li {
 	font-family:'Times New Roman', Times, serif;
 	font-size: 2.1vw;
 }
-
+body {
+	background: #333333;
+}
 .sidepanel {
 	z-index: 9;
 	background-color: #fed;
@@ -68,12 +70,15 @@ html, body, div, td, li {
 	font-style: italic;
 	font-size: 2.8vw;
 }
-
 .section_title {
 	text-align: center;
 	margin-bottom: 2vw;
 }
-
+.image {
+	position: absolute;
+	right: -1vw;
+	width: 10vw;
+}
 .section_contact {
 	margin-bottom: 3vw;
 }
@@ -88,7 +93,7 @@ html, body, div, td, li {
 .section_contact a:hover,
 .section_contact a:active {
 	text-decoration: underline;
-}}
+}
 .field_address {}
 .field_phone {}
 .field_email {}
@@ -139,9 +144,7 @@ html, body, div, td, li {
 
 	vertical-align: top;
 	width: 12%;
-}
-.field_period {
-	width: 100%;
+	min-height: 100%;
 }
 .exp_td_right {
 	padding: 0 0.5vw 0.4vw 0.9vw;

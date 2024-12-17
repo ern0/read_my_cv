@@ -158,6 +158,7 @@ class Gen:
 
         for self.line in self.file:
             self.line = self.line.strip()
+            self.line = self.line.replace("−", "-")
 
             if self.line.startswith("----"):
                 if self.line == "":
@@ -225,6 +226,7 @@ class Gen:
     def render_title(self):
 
         word = None
+        img = None
 
         if self.section_type == "skills":
             word = "Skills"
@@ -232,8 +234,10 @@ class Gen:
             word = "Languages"
         if self.section_type == "experience":
             word = "Experience"
+            img = "img/exp.png"
         if self.section_type == "education":
             word = "Education"
+            img = "img/edu.png"
 
         if word is None:
             return
@@ -241,6 +245,12 @@ class Gen:
             return
 
         self.is_sections_rendered[word] = None
+
+        attrs = []
+        if img is not None:
+            attrs.append( ("src", img,) )
+        attrs.append( ("class", "image image_" + self.section_type,) )
+        self.render.open("img", attrs, True)
 
         self.render.open("div",[("class", "title")])
         self.render.text(word)

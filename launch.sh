@@ -4,11 +4,11 @@ clear
 ./cvgen.py ern0.cv > cv.html
 
 wkhtmltopdf \
-    -q \
     --enable-local-file-access \
     --enable-javascript \
     --debug-javascript \
-    --javascript-delay 1000 \
+    --javascript-delay 100 \
+    --run-script "hide_sidepanel();" \
     \
     --page-size A4 \
     --zoom 0.65 \

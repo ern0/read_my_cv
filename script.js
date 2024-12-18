@@ -5,7 +5,7 @@ function main() {
 
 	app = {};
 
-	collect_dom_tags();
+	//collect_dom_tags();
 
 	return; /////////////////////////////////////////////////
 
@@ -19,6 +19,13 @@ function main() {
     update_url();
 
     /// http://localhost:8080/cv.html?tags=role:prosti,role:pedmed,happy,innnn,return,xxxxx&a=12121
+}
+
+function hide_sidepanel() {
+
+	var elms = document.querySelectorAll("[class=sidepanel]");
+	elms[0].style.display = "none";
+
 }
 
 function collect_dom_tags() {

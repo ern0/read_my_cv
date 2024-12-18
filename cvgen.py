@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import sys
-import time
 
 class Render:
 
@@ -112,6 +111,7 @@ class Gen:
         self.is_first_section = True
         self.is_sections_rendered = {}
         self.is_exp_close_needed = False
+        self.is_edu_close_needed = False
         self.is_ul_close_needed = False
         self.is_intro_first_line = True
         self.is_intro_open_para = True
@@ -194,6 +194,7 @@ class Gen:
 
         self.close_exp_ul_if_needed()
         self.close_exp_header_if_needed()
+        self.close_edu_header_if_needed()
 
         for i in range(4):
             self.render.close_last()
@@ -202,6 +203,7 @@ class Gen:
 
         self.close_exp_ul_if_needed()
         self.close_exp_header_if_needed()
+        self.close_edu_header_if_needed()
 
         self.line = self.line.replace("----","").strip()
         self.section_tags = self.parse_tags()
@@ -277,6 +279,8 @@ class Gen:
             self.proc_item_skills_langs()
         elif self.section_type == "experience":
             self.proc_item_experience()
+        elif self.section_type == "education":
+            self.proc_item_education()
 
         self.is_first_line = False
 
@@ -377,9 +381,6 @@ class Gen:
 
     def proc_item_experience(self):
 
-        if self.line == "":
-            return
-
         if len(self.exp_features) < 3:
             self.proc_item_exp_header()
         else:
@@ -388,7 +389,7 @@ class Gen:
     def proc_item_exp_header(self):
 
         feat = self.proc_item_exp_header_get_type()
-        text = self.proc_item_exp_header_normalize_period(feat)
+        text = self.normalize_period(feat)
         self.exp_features[feat] = (text, self.tags,)
         if len(self.exp_features) == 3:
             self.proc_item_exp_header_render()
@@ -409,7 +410,7 @@ class Gen:
 
         return feat
 
-    def proc_item_exp_header_normalize_period(self, feat):
+    def normalize_period(self, feat):
 
         text = self.line
 
@@ -426,17 +427,18 @@ class Gen:
         self.render.open("table", [("class", "exp_table",)])
         self.render.open("tr", [("class", "exp_tr",)])
         self.render.open("td", [("class", "exp_td_left",)])
-        self.proc_item_ex_header_render_field("period")
+        self.proc_item_exp_header_render_field("period")
         self.render.close_last()
 
         self.render.open("td", [("class", "exp_td_right",)])
         self.render.open("div", [("class", "exp_heading",)])
-        self.proc_item_ex_header_render_field("role", no_eol=True)
-        self.proc_item_ex_header_render_field("company")
+        self.proc_item_exp_header_render_field("role", no_eol=True)
+        self.proc_item_exp_header_render_field("company")
         self.render.close_last()
+
         self.is_exp_close_needed = True
 
-    def proc_item_ex_header_render_field(self, field, no_eol=False):
+    def proc_item_exp_header_render_field(self, field, no_eol=False):
 
         (text, tags,) = self.exp_features[field]
         self.render.open_field("span", field, tags)
@@ -480,6 +482,50 @@ class Gen:
         self.render.text(text)
         self.render.eol()
         self.render.close_last()
+
+    def proc_item_education(self):
+
+        if self.is_first_line:
+            self.proc_item_edu_header_render()
+            self.is_edu_close_needed = True
+        else:
+            self.proc_item_edu_body_render()
+
+    def proc_item_edu_header_render(self):
+
+        self.render.open("table", [("class", "edu_table",)])
+        self.render.open("tr", [("class", "edu_tr",)])
+        self.render.open("td", [("class", "edu_td_left",)])
+        self.proc_item_edu_header_render_field("period")
+        self.render.close_last()
+
+        self.render.open("td", [("class", "edu_td_right",)])
+
+        self.is_edu_close_needed = True
+
+    def proc_item_edu_header_render_field(self, field, no_eol=False):
+
+        self.render.open_field("span", field, self.tags)
+        text = self.normalize_period(field)
+        self.render.text(text)
+        self.render.close_last(no_eol=no_eol)
+
+    def close_edu_header_if_needed(self):
+
+        if not self.is_edu_close_needed:
+            return
+        self.is_edu_close_needed = False
+
+        for i in range(3):
+            self.render.close_last()
+
+    def proc_item_edu_body_render(self):
+
+            self.render.open_field("div", "education", self.tags)
+            self.render.text(self.line)
+            self.render.eol()
+            self.render.close_last()
+
 
 if __name__ == "__main__":
     Gen().main()

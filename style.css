@@ -135,18 +135,18 @@ body {
 .section_experience {
 	margin: 0.5vw 0 0.5vw 0;
 }
-.exp_table {
+.exp_table, .edu_table {
 	width: 100%;
 }
-.exp_tr {}
-.exp_td_left {
+.exp_tr, .edu_tr {}
+.exp_td_left, .edu_td_left {
 	padding: 0 0.5vw 0 0.5vw;
 
 	vertical-align: top;
 	width: 12%;
 	min-height: 100%;
 }
-.exp_td_right {
+.exp_td_right, .edu_td_right {
 	padding: 0 0.5vw 0.4vw 0.9vw;
 }
 .exp_heading {

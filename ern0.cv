@@ -104,10 +104,9 @@ Design and implement tools (Python)
 Full-Stack Developer, Quality Lead
 EcoStudio Kft
 
-Build microservices architecture application and
-tests [Node.js] [RabbitMQ] [Haxe] [RethinkDB]
+Build microservices architecture application and tests [Node.js] [RabbitMQ] [Haxe] [RethinkDB]
 
----- experience ----
+---- experience #web ----
 
 2013−2016
 Senior Full-Stack Developer
@@ -132,7 +131,7 @@ Systems Architect, Developer
 Porion Kft, Bitklub Kft
 
 Digital television (DVB) SI/EPG inserter [C++], admin UI [HTML]
-Hierarchical web form editor framework [PHP]
+Hierarchical web form editor framework [PHP] #web
 Home automation-purpose dataflow sytem prototype
 Collaborative spreadsheet concept and prototype
 

@@ -3,13 +3,28 @@ document.addEventListener("DOMContentLoaded", main);
 
 function main() {
 
-	app = {};
+	// Collect tags into app global object
+	//
+	// app.tags[tag] = none
+	// - tag: tag name
+	// - none: empty string
+	//
+	// app.sets[tag_set] = [actual_state, auto_flag]
+	// - tag_set: tags separated with "-" sign, e.g. "backend-frontend".
+	//   The elements of the set are ordered aphabetically, e.g. "a-b-c"
+	// - value: array of 2
+	//   - Actual state: "show" or "hide"
+	//   - Auto flag: "auto" or "explicit"
+	//     If set, the actual state can be changed automatically based
+	//     on individual tags' states (see app.tags).
+	//     When the auto flag is set, but the situation is ambigous,
+	//     (e.g. a="show" and b="hide" => a-b=?), the actual state is
+	//     not set automatically, and "ambigous" indicator appears
+	//
+	collect_dom_tags();
 
-	//collect_dom_tags();
-
+	//create_sidepanel();
 	return; /////////////////////////////////////////////////
-
-	create_sidepanel();
 
     set_default_req_tags();
     parse_url_req_tags();
@@ -17,8 +32,6 @@ function main() {
 	update_document();
 	update_sidepanel();
     update_url();
-
-    /// http://localhost:8080/cv.html?tags=role:prosti,role:pedmed,happy,innnn,return,xxxxx&a=12121
 }
 
 function hide_sidepanel() {
@@ -30,46 +43,32 @@ function hide_sidepanel() {
 
 function collect_dom_tags() {
 
+	app = {}
 	app.tags = {};
+	app.sets = {}
 
 	const elms = document.querySelectorAll("[class]");
-
 	for (var i = 0; i < elms.length; i++) {
 		var elm = elms[i];
-		const classes = elm.attributes["class"].value.split(" ");
+		var cls_list = elm.attributes["class"].value.split(" ");
+		var elm_tags = {}
 
-		for (var j = 0; j < classes.length; i++) {
-			var tag = elms[i];
-		    const kv = parse_tag(tag);
-	    	const key = kv[0];
-	    	const value = kv[1];
-			register_tag(key, value, elm);
+		for (var j = 0; j < cls_list.length; j++) {
+			var tag = cls_list[j];
+			if (tag.substring(0,4) != "tag_") continue;
+			tag = tag.substring(4);
+
+			app.tags[tag] = "show";
+			elm_tags[tag] = "";
+		}
+
+		if (Object.keys(elm_tags).length > 1) {
+			var tag_set = Object.keys(elm_tags).sort().join("-");
+			app.sets[tag_set] = ["show", "auto"];
 		}
 	}
 }
 
-function parse_tag(tag) {
-
-    if (tag.includes(":")) {
-		const kv = tag.split(":");
-		key = kv[0].trim();
-		value = kv[1].trim();
-    } else {
-		key = "_tag";
-		value = tag.trim();
-    }
-
-    return [key, value];
-}
-
-function register_tag(category, tag, elm) {
-
-	if (!(category in app.tags)) app.tags[category] = {};
-	if (!(tag in app.tags[category])) app.tags[category][tag] = [];
-
-	app.tags[category][tag].push(elm);
-
-}
 
 function create_sidepanel() {
 
@@ -81,47 +80,27 @@ function render_sidepanel() {
 
 	var content = "";
 
-    for (var category in app.tags) {
-		content += render_sidepanel_header(category);
-		for (tag in app.tags[category]) {
-			content += render_sidepanel_item(category, tag);
-		}
+    for (var tag in app.tags) {
+		content += render_sidepanel_tag(tag);
 	}
 
     return content;
 }
 
-function render_sidepanel_header(category) {
+function render_sidepanel_tag(tag) {
 
     content = "";
 
-    content += "<b>";
-    if (category[0] == "_") {
-		content += category.substring(1);
-    } else {
-		content += category;
-    }
-    content += "</b><br/>";
-
-    return content;
-}
-
-function render_sidepanel_item(category, tag) {
-
-    widget_id = widget_mkid(category, tag);
+    widget_id = widget_mkid(tag);
     content = "";
 
     content += "<input";
     content += " class=" + quote("check");
-    if (category[0] == "_") {
 	content += " type=" + quote("checkbox");
-    } else {
-	content += " type=" + quote("radio");
-    }
     content += " id=" + quote(widget_id);
     content += " name=" + quote(tag);
     content += " onclick=";
-    content += quote(render_sidepanel_click_action(category, tag));
+    content += quote(render_sidepanel_click_action(tag));
     content += " /> "
 
     content += "<label for=" + quote(widget_id) + ">";
@@ -132,12 +111,10 @@ function render_sidepanel_item(category, tag) {
     return content;
 }
 
-function render_sidepanel_click_action(category, tag) {
+function render_sidepanel_click_action(tag) {
 
     content = "";
     content += "widget_clicked(";
-    content += singlequote(category);
-    content += ",";
     content += singlequote(tag);
     content += ");";
 
@@ -152,43 +129,22 @@ function singlequote(str) {
 	return "'" + str + "'";
 }
 
-function widget_mkid(category, tag) {
-    return "widget-" + category + "-" + tag;
-}
-
-function set_default_req_tags() {
-
-    app.req = {};
-    app.req["_tag"] = [];
-
-    for (category in app.tags) {
-	if (category[0] == "_") continue;
-
-		for (tag in app.tags[category]) {
-			register_req(category, tag);
-			break;
-		}
-	}
+function widget_mkid(tag) {
+    return "widget-" + tag;
 }
 
 function parse_url_req_tags() {
+
+	app.req = {}
 
 	url_params = new URLSearchParams(window.location.search);
 	tags = url_params.get("tags");
 	if (tags == null) tags = "";
 
 	tag_list = tags.split(",");
-    for (url_tag in tag_list) {
-
-	kv = parse_tag(url_tag);
-	category = kv[0];
-	tag = kv[1];
-
-	if (!(category in app.tags)) continue;
-	if (!(tag in app.tags[category])) continue;
-
-	register_req(category, tag);
-    }
+    for (tag in tag_list) {
+		app.req[tag] = ""
+	}
 }
 
 function register_req(category, tag) {

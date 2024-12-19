@@ -1,37 +1,31 @@
-document.addEventListener("DOMContentLoaded", main);
+// These global variables contain the tag states:
+//
+// app.tags[tag] = state
+// - tag: tag name
+// - state: "show" or "hide"
+//
+// app.sets[tag_set] = [actual_state, auto_flag]
+// - tag_set: tags separated with "-" sign, e.g. "backend-frontend".
+//   The elements of the set are ordered aphabetically, e.g. "a-b-c"
+// - value: array of 2
+//   - Actual state: "show" or "hide"
+//   - Auto flag: "auto" or "explicit"
+//     If set, the actual state can be changed automatically based
+//     on individual tags' states (see app.tags).
+//     When the auto flag is set, but the situation is ambigous,
+//     (e.g. a="show" and b="hide" => a-b=?), the actual state is
+//     not set automatically, and "ambigous" indicator appears
 
+document.addEventListener("DOMContentLoaded", main);
 
 function main() {
 
-	// Collect tags into app global object
-	//
-	// app.tags[tag] = none
-	// - tag: tag name
-	// - none: empty string
-	//
-	// app.sets[tag_set] = [actual_state, auto_flag]
-	// - tag_set: tags separated with "-" sign, e.g. "backend-frontend".
-	//   The elements of the set are ordered aphabetically, e.g. "a-b-c"
-	// - value: array of 2
-	//   - Actual state: "show" or "hide"
-	//   - Auto flag: "auto" or "explicit"
-	//     If set, the actual state can be changed automatically based
-	//     on individual tags' states (see app.tags).
-	//     When the auto flag is set, but the situation is ambigous,
-	//     (e.g. a="show" and b="hide" => a-b=?), the actual state is
-	//     not set automatically, and "ambigous" indicator appears
-	//
 	collect_dom_tags();
+	parse_url();
+	update_url();
 
-	//create_sidepanel();
+	create_sidepanel();
 	return; /////////////////////////////////////////////////
-
-    set_default_req_tags();
-    parse_url_req_tags();
-
-	update_document();
-	update_sidepanel();
-    update_url();
 }
 
 function hide_sidepanel() {
@@ -69,53 +63,175 @@ function collect_dom_tags() {
 	}
 }
 
+function parse_url() {
+
+	url_params = new URLSearchParams(window.location.search);
+
+	var verbs = ["show", "hide"];
+	for (var verb_index = 0; verb_index < verbs.length; verb_index++) {
+		var verb = verbs[verb_index];
+
+		var tags = url_params.get(verb);
+		if (tags == null) continue;
+
+		var tag_list = tags.split(",");
+		for (var tag_index = 0; tag_index < tag_list.length; tag_index++) {
+			var tag = tag_list[tag_index];
+			if ((typeof app.tags[tag] == "undefined") && (typeof app.sets[tag] == "undefined")) {
+				console.warn("invalid tag in URL:", tag);
+				continue;
+			}
+
+			if (tag.indexOf("-") > -1) {
+				app.sets[tag] = [verb, "explicit"];
+			} else {
+				app.tags[tag] = verb;
+			}
+
+		}
+	}
+}
+
+function make_url() {
+
+	var url = ""
+
+	var verbs = ["show", "hide"];
+	for (var verb_index = 0; verb_index < verbs.length; verb_index++) {
+		var verb = verbs[verb_index];
+		var tag_list = "";
+
+		for (tag in app.tags) {
+			if (app.tags[tag] != verb) continue;
+			if (tag_list != "") tag_list += ",";
+			tag_list += tag;
+		}
+
+		for (tag in app.sets) {
+			if (app.sets[tag][0] != verb) continue;
+			if (tag_list != "") tag_list += ",";
+			tag_list += tag;
+		}
+
+		if (tag_list != "") {
+			if (url == "") {
+				url += "?";
+			} else {
+				url += "&";
+			}
+			url += verb + "=" + tag_list;
+		}
+	}
+
+	var base_url = window.location.href.split("?")[0];
+	return base_url + url;
+}
+
+function update_url() {
+	var url = make_url();
+    history.pushState({}, null, url);
+}
+
 
 function create_sidepanel() {
-
 	var sidepanel = document.querySelector(".sidepanel");
 	sidepanel.innerHTML = render_sidepanel();
 }
 
 function render_sidepanel() {
 
-	var content = "";
+	var content = render_sidepanel_header();
 
-    for (var tag in app.tags) {
-		content += render_sidepanel_tag(tag);
+    for (var tag_index in app.tags) {
+		var tag_value = app.tags[tag_index];
+		content += render_sidepanel_item("tag", tag_index, tag_value);
 	}
+    for (var set_index in app.sets) {
+		var set_value = app.sets[set_index][0];
+		content += render_sidepanel_item("set", set_index, set_value);
+	}
+
+	content += render_sidepanel_footer();
 
     return content;
 }
 
-function render_sidepanel_tag(tag) {
+function render_sidepanel_header() {
 
-    content = "";
+	var content = "<table border=1 cellpadding=0 cellspacing=0>";
 
-    widget_id = widget_mkid(tag);
-    content = "";
+	content += "<tr>"
+	content += "<td>label</td>"
+	content += "<td>show</td>"
+	content += "<td>auto</td>"
+	content += "</tr>"
 
+	return content;
+}
+
+function render_sidepanel_footer() {
+
+	var content = "</table>";
+
+	return content;
+}
+
+function render_sidepanel_item(item_type, index, value) {
+
+    var content = "<tr>";
+
+	content += render_sidepanel_item_label(index);
+	content += render_sidepanel_item_checkbox("show", index);
+	if (item_type == "tag") {
+		content += render_sidepanel_item_blank();
+	} else {
+		content += render_sidepanel_item_checkbox("auto", index);
+	}
+
+    content += "</tr>";
+
+	return content;
+}
+
+function render_sidepanel_item_checkbox(verb, index) {
+
+	var content = "<td>";
     content += "<input";
     content += " class=" + quote("check");
 	content += " type=" + quote("checkbox");
-    content += " id=" + quote(widget_id);
-    content += " name=" + quote(tag);
+    content += " id=" + quote(verb + "-" + index);
+    content += " name=" + quote(index);
     content += " onclick=";
-    content += quote(render_sidepanel_click_action(tag));
+    content += quote(render_sidepanel_click_action(verb + "_" + index));
     content += " /> "
-
-    content += "<label for=" + quote(widget_id) + ">";
-    content += tag;
-    content += "</label>"
-    content += "<br/>";
+	content += "</td>";
 
     return content;
 }
 
-function render_sidepanel_click_action(tag) {
+function render_sidepanel_item_blank() {
+
+	var content = "<td>";
+	content += "&nbsp;"
+	content += "</td>";
+
+	return content;
+}
+
+function render_sidepanel_item_label(text) {
+
+	var content = "<td>";
+	content += text;
+	content += "</td>";
+
+	return content;
+}
+
+function render_sidepanel_click_action(id) {
 
     content = "";
     content += "widget_clicked(";
-    content += singlequote(tag);
+    content += singlequote(id);
     content += ");";
 
     return content;
@@ -129,69 +245,17 @@ function singlequote(str) {
 	return "'" + str + "'";
 }
 
-function widget_mkid(tag) {
-    return "widget-" + tag;
-}
+function widget_clicked(id) {
 
-function parse_url_req_tags() {
+	var elm = document.getElementById(id);
 
-	app.req = {}
+	console.log(id, elm);
 
-	url_params = new URLSearchParams(window.location.search);
-	tags = url_params.get("tags");
-	if (tags == null) tags = "";
-
-	tag_list = tags.split(",");
-    for (tag in tag_list) {
-		app.req[tag] = ""
-	}
-}
-
-function register_req(category, tag) {
-
-    append = true;
-    if (category[0] != "_") append = false;
-    if (!(category in app.req)) append = false;
-
-    if (append) {
-		app.req[category].push(tag);
-    } else {
-		app.req[category] = [tag];
-    }
-
-}
-
-function update_document() {
-
-    update_document_hide_all();
-    update_document_show_req();
-}
-
-function update_document_hide_all() {
-
-    for ( category in app.tags) {
-	for ( tag in app.tags[category]) {
-	    for ( elm in app.tags[category][tag]) {
-		hide_elm(elm);
-	    }
-	}
-    }
-}
-
-function update_document_show_req() {
-
-    for ( category in app.req) {
-	for ( tag in app.req[category]) {
-	    for ( elm in app.tags[category][tag]) {
-		show_elm(elm);
-	    }
-	}
-    }
 }
 
 function hide_elm(elm) {
 
-	const old_disp = elm.style.display;
+	var old_disp = elm.style.display;
 	if (old_disp == "none") return;
 
 	elm.setAttribute("_style_display", old_disp);
@@ -200,109 +264,8 @@ function hide_elm(elm) {
 
 function show_elm(elm) {
 
-	 old_disp = elm.style.display;
+	var old_disp = elm.style.display;
 	if (old_disp != "none") return;
 
 	elm.style.display = elm.getAttribute("_style_display");
-}
-
-function update_sidepanel() {
-
-    update_sidepanel_hide_all();
-    update_sidepanel_show_req();
-
-}
-
-function update_sidepanel_hide_all() {
-
-    for ( category in app.tags) {
-	for ( tag in app.tags[category]) {
-
-	     widget_id = widget_mkid(category, tag);
-	    elm = document.getElementById(widget_id);
-	    elm.checked = false;
-
-	}
-    }
-}
-
-function update_sidepanel_show_req() {
-
-    for ( category in app.req) {
-	for ( tag in app.req[category]) {
-
-	     widget_id = widget_mkid(category, tag);
-	    elm = document.getElementById(widget_id);
-	    elm.checked = true;
-
-	}
-    }
-}
-
-function widget_clicked(category, tag) {
-
-    if (category[0] == "_") {
-	widget_clicked_checkbox(category, tag);
-    } else {
-	widget_clicked_radio(category, tag);
-    }
-
-    update_document();
-    update_sidepanel();
-    update_url();
-}
-
-function widget_clicked_radio(category, tag) {
-
-    if (app.req[category].includes(tag)) return;
-    app.req[category] = [tag];
-}
-
-function widget_clicked_checkbox(category, tag) {
-
-    if (app.req[category].includes(tag)) {
-	app.req[category] = app.req[category].filter(
-	    function(item) { return item != tag }
-	);
-    } else {
-	app.req[category].push(tag);
-    }
-}
-
-function update_url() {
-
-	 params = new URLSearchParams(window.location.search);
-	params.set("tags", render_taglist());
-
-	 url = window.location.origin;
-	url += window.location.pathname;
-	url += "?" + params.toString();
-	url = url.replaceAll("%2C", ",");
-	url = url.replaceAll("%3A", ":");
-
-	try {
-		history.pushState({}, "", url);
-	} catch (ex) {
-		if (ex instanceof DOMException) {
-			console.warn("Can't rewrite URL for file:///");
-		} else {
-			throw ex;
-		}
-	}
-}
-
-function render_taglist() {
-
-    result = "";
-
-    for ( category in app.req) {
-	for ( tag in app.req[category]) {
-
-	    if (result != "") result += ",";
-	    if (category[0] != "_") result += category + ":";
-	    result += tag;
-	}
-    }
-
-    return result;
 }

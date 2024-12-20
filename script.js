@@ -23,9 +23,8 @@ function main() {
 	collect_dom_tags();
 	parse_url();
 	update_url();
-
 	create_sidepanel();
-	return; /////////////////////////////////////////////////
+
 }
 
 function hide_sidepanel() {
@@ -249,13 +248,31 @@ function singlequote(str) {
 
 function widget_clicked(id) {
 
+	proc_click(id);
+	update_url();
+
+}
+
+function proc_click(id) {
+
 	var checked = document.getElementById(id).checked;
 
 	var a = id.split("_");
 	var verb = a[0];
 	var tag = a[1];
 
-	console.log(tag, verb, checked);
+	if ((verb == "show") && (!checked)) verb = "hide";
+	if ((verb == "auto") && (!checked)) verb = "explicit";
+
+	if (tag.indexOf("-") < 0) {
+		app.tags[tag] = verb;
+	} else {
+		if ((verb == "show") || (verb == "hide")) {
+			app.sets[tag][0] = verb;
+		} else {
+			app.sets[tag][1] = verb;
+		}
+	}
 
 }
 

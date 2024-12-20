@@ -183,12 +183,12 @@ class Gen:
                 self.render.close_last()
                 self.render.close_last()
 
-        self.render.open("div", [("class", "sidepanel",)])
+        self.render.open("div", [("class", "side",)])
         self.render.text("side")
         self.render.eol()
         self.render.close_last()
 
-        self.render.open("div", [("class", "side side_left",)])
+        self.render.open("div", [("class", "column column_left",)])
 
     def render_html_post(self):
 
@@ -216,7 +216,7 @@ class Gen:
 
         if self.section_type == "intro":
             self.render.close_last()
-            self.render.open("div", [("class", "side side_right",)])
+            self.render.open("div", [("class", "column column_right",)])
 
         self.render_title()
 

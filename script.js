@@ -30,7 +30,7 @@ function main() {
 
 function hide_sidepanel() {
 
-	var elms = document.querySelectorAll("[class=sidepanel]");
+	var elms = document.querySelectorAll("[class=side]");
 	elms[0].style.display = "none";
 
 }
@@ -134,7 +134,7 @@ function update_url() {
 
 
 function create_sidepanel() {
-	var sidepanel = document.querySelector(".sidepanel");
+	var sidepanel = document.querySelector(".side");
 	sidepanel.innerHTML = render_sidepanel();
 }
 
@@ -143,12 +143,13 @@ function render_sidepanel() {
 	var content = render_sidepanel_header();
 
     for (var tag_index in app.tags) {
-		var tag_value = app.tags[tag_index];
-		content += render_sidepanel_item("tag", tag_index, tag_value);
+		var show = app.tags[tag_index];
+		content += render_sidepanel_item("tag", tag_index, show, "");
 	}
     for (var set_index in app.sets) {
-		var set_value = app.sets[set_index][0];
-		content += render_sidepanel_item("set", set_index, set_value);
+		var show = app.sets[set_index][0];
+		var auto = app.sets[set_index][1];
+		content += render_sidepanel_item("set", set_index, show, auto);
 	}
 
 	content += render_sidepanel_footer();
@@ -158,12 +159,12 @@ function render_sidepanel() {
 
 function render_sidepanel_header() {
 
-	var content = "<table border=1 cellpadding=0 cellspacing=0>";
+	var content = "<table class=" + quote("side_table") + ">";
 
-	content += "<tr>"
-	content += "<td>label</td>"
-	content += "<td>show</td>"
-	content += "<td>auto</td>"
+	content += "<tr class=" + quote("side_head_tr") + ">"
+	content += "<td class=" + quote("side_head_td") + ">label</td>"
+	content += "<td class=" + quote("side_head_td") + ">show</td>"
+	content += "<td class=" + quote("side_head_td") + ">auto</td>"
 	content += "</tr>"
 
 	return content;
@@ -176,16 +177,16 @@ function render_sidepanel_footer() {
 	return content;
 }
 
-function render_sidepanel_item(item_type, index, value) {
+function render_sidepanel_item(verb, tag, show, auto) {
 
-    var content = "<tr>";
+    var content = "<tr class=" + quote("side_item_tr") + ">";
 
-	content += render_sidepanel_item_label(index);
-	content += render_sidepanel_item_checkbox("show", index);
-	if (item_type == "tag") {
+	content += render_sidepanel_item_label(tag);
+	content += render_sidepanel_item_checkbox("show", tag, show == "show");
+	if (verb == "tag") {
 		content += render_sidepanel_item_blank();
 	} else {
-		content += render_sidepanel_item_checkbox("auto", index);
+		content += render_sidepanel_item_checkbox("auto", tag, auto == "auto");
 	}
 
     content += "</tr>";
@@ -193,16 +194,17 @@ function render_sidepanel_item(item_type, index, value) {
 	return content;
 }
 
-function render_sidepanel_item_checkbox(verb, index) {
+function render_sidepanel_item_checkbox(field, tag, checked) {
 
-	var content = "<td>";
+	var content = "<td class=" + quote("side_item_td") + ">";
     content += "<input";
-    content += " class=" + quote("check");
+    content += " class=" + quote("side_item_checkbox");
 	content += " type=" + quote("checkbox");
-    content += " id=" + quote(verb + "-" + index);
-    content += " name=" + quote(index);
+    content += " id=" + quote(field + "_" + tag);
+    content += " name=" + quote(tag);
+	if (checked) content += " checked";
     content += " onclick=";
-    content += quote(render_sidepanel_click_action(verb + "_" + index));
+    content += quote(render_sidepanel_click_action(field + "_" + tag));
     content += " /> "
 	content += "</td>";
 
@@ -220,7 +222,7 @@ function render_sidepanel_item_blank() {
 
 function render_sidepanel_item_label(text) {
 
-	var content = "<td>";
+	var content = "<td class=" + quote("side_item_label") +">";
 	content += text;
 	content += "</td>";
 
@@ -247,9 +249,13 @@ function singlequote(str) {
 
 function widget_clicked(id) {
 
-	var elm = document.getElementById(id);
+	var checked = document.getElementById(id).checked;
 
-	console.log(id, elm);
+	var a = id.split("_");
+	var verb = a[0];
+	var tag = a[1];
+
+	console.log(tag, verb, checked);
 
 }
 

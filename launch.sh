@@ -2,6 +2,7 @@
 clear
 
 ./cvgen.py ern0.cv > cv.html
+exit
 
 wkhtmltopdf \
     --enable-local-file-access \

@@ -8,7 +8,7 @@ html, body, div, td, li {
 body {
 	background: #333333;
 }
-.sidepanel {
+.side {
 	z-index: 9;
 	background-color: #fed;
 	opacity: 10%;
@@ -24,29 +24,59 @@ body {
 	right: 0;
 
 	transform: translateX(calc(100% - 20px));
-	transition: opacity .9s ease .4s, transform .9s ease .4s;
+	transition: .9s ease .4s, transform .9s ease .4s;
 }
-.sidepanel:hover {
+.side {  /* :hover */
 	transform: translateX(0);
 
-	opacity: 90%;
+	opacity: 94%;
 	transition: opacity .1s linear, transform .1s linear;
 }
+.side_head_td,
+.side_item_td,
+.side_item_label {
+	font-size: 1.2em;
+}
+.side_table {
+    border-spacing: 0 0.4em 0 0.4em;
+    border-collapse: separate;
+}
+.side_head_tr {
+}
+.side_head_td {
+	text-align: center;
+	font-style: italic;
+	border-bottom: 1px solid black;
+	padding: 0 0.4em 0 0.4em;
+}
+.side_item_tr {
+}
+.side_item_td {
+	text-align: center;
+}
+.side_item_checkbox {
+	width: 1.5em;
+	height: 1.5em;
+}
+.side_item_label {
+	text-align: right;
+	padding-right: 0.3em;
+}
 
-.side {
+.column {
 	position: absolute;
 	top: 0;
 	padding: 10pt;
 	margin: 0;
 	padding: 0;
 }
-.side_left {
+.column_left {
 	width: 40%;
 	left: 0;
 	background: #333333;
 	color: white;
 }
-.side_right {
+.column_right {
 	width: 60%;
 	right: 0;
 	background: #ffffff;
@@ -61,8 +91,7 @@ body {
 .section {
 	padding: 0 10pt 0 10pt;
 }
-.field {
-}
+.field {}
 .field_name {
 	font-size: 50pt;
 }

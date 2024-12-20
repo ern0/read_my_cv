@@ -10,7 +10,7 @@ body {
 }
 .side {
 	z-index: 9;
-	background-color: #fed;
+	background-color: #ffeedd;
 	opacity: 10%;
 	border-left: 2px solid #987;
 	border-top: 2px solid #987;
@@ -61,6 +61,9 @@ body {
 .side_item_label {
 	text-align: right;
 	padding-right: 0.3em;
+}
+.side_item_td_ambigous {
+	background: #ffddcc;
 }
 
 .column {

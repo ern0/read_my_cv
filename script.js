@@ -271,9 +271,34 @@ function proc_click(id) {
 			app.sets[tag][0] = verb;
 		} else {
 			app.sets[tag][1] = verb;
+			if (verb == "auto") procAuto(tag);
 		}
 	}
 
+}
+
+function procAuto(set) {
+
+// TODO: call on member change
+	var tag_list = set.split("-");
+	var values = {};
+	for (var tag_index in tag_list) {
+		var tag = tag_list[tag_index];
+
+		var value = app.tags[tag];
+		values[value] = "";
+	}
+
+	if (Object.keys(values).length == 1) {
+		for (var value in values) {
+			console.log("value:",value)
+		}
+	} else {
+		console.log("ambigous");
+	}
+
+
+	// .side_item_td_ambigous
 }
 
 function hide_elm(elm) {

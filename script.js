@@ -195,7 +195,10 @@ function render_sidepanel_item(verb, tag, show, auto) {
 
 function render_sidepanel_item_checkbox(field, tag, checked) {
 
-	var content = "<td class=" + quote("side_item_td") + ">";
+	var content = "<td"
+	content += " id=" + quote("ambig_" + field + "_" + tag);
+	content += " class=" + quote("side_item_td");
+	content += ">";
     content += "<input";
     content += " class=" + quote("side_item_checkbox");
 	content += " type=" + quote("checkbox");
@@ -219,10 +222,13 @@ function render_sidepanel_item_blank() {
 	return content;
 }
 
-function render_sidepanel_item_label(text) {
+function render_sidepanel_item_label(tag) {
 
-	var content = "<td class=" + quote("side_item_label") +">";
-	content += text;
+	var content = "<td";
+	content += " id=" + quote("ambig_label_" + tag);
+	content += " class=" + quote("side_item_label");
+	content += ">";
+	content += tag;
 	content += "</td>";
 
 	return content;
@@ -248,38 +254,49 @@ function singlequote(str) {
 
 function widget_clicked(id) {
 
-	proc_click(id);
-	update_url();
-
-}
-
-function proc_click(id) {
-
 	var checked = document.getElementById(id).checked;
-
 	var a = id.split("_");
 	var verb = a[0];
-	var tag = a[1];
+	var tag_or_set = a[1];
 
 	if ((verb == "show") && (!checked)) verb = "hide";
 	if ((verb == "auto") && (!checked)) verb = "explicit";
 
-	if (tag.indexOf("-") < 0) {
-		app.tags[tag] = verb;
+	if (tag_or_set.indexOf("-") < 0) {
+		proc_click_tag_show(tag_or_set, verb);
 	} else {
 		if ((verb == "show") || (verb == "hide")) {
-			app.sets[tag][0] = verb;
+			proc_click_set_show(tag_or_set, verb);
 		} else {
-			app.sets[tag][1] = verb;
-			if (verb == "auto") procAuto(tag);
+			proc_click_set_auto(tag_or_set, verb);
 		}
 	}
 
+	update_url();
 }
 
-function procAuto(set) {
+function proc_click_tag_show(tag, verb) {
 
-// TODO: call on member change
+	app.tags[tag] = verb;
+
+	for (var set in app.sets) {
+		if (set.indexOf(tag) < 0) continue;
+		proc_adjust_auto(set);
+	}
+}
+
+function proc_click_set_show(set, verb) {
+	app.sets[set][0] = verb;
+	proc_adjust_auto(set);
+}
+
+function proc_click_set_auto(set, verb) {
+	app.sets[set][1] = verb;
+	proc_adjust_auto(set);
+}
+
+function proc_adjust_auto(set) {
+
 	var tag_list = set.split("-");
 	var values = {};
 	for (var tag_index in tag_list) {
@@ -289,16 +306,35 @@ function procAuto(set) {
 		values[value] = "";
 	}
 
-	if (Object.keys(values).length == 1) {
-		for (var value in values) {
-			console.log("value:",value)
-		}
+	var ambig1 = document.getElementById("ambig_label_" + set);
+	var ambig2 = document.getElementById("ambig_show_" + set);
+	var ambig3 = document.getElementById("ambig_auto_" + set);
+
+	var show_elm = document.getElementById("show_" + set);
+	show_elm.disabled = false;
+	var ambigous = true;
+
+	if (app.sets[set][1] == "explicit") {
+		ambigous = false;
 	} else {
-		console.log("ambigous");
+		if (Object.keys(values).length == 1) {
+			ambigous = false;
+			for (var value in values) {
+				show_elm.checked = (value == "show");
+				show_elm.disabled = true;
+			}
+		}
 	}
 
-
-	// .side_item_td_ambigous
+	if (ambigous) {
+		ambig1.classList.add("side_item_td_ambigous");
+		ambig2.classList.add("side_item_td_ambigous");
+		ambig3.classList.add("side_item_td_ambigous");
+	} else {
+		ambig1.classList.remove("side_item_td_ambigous");
+		ambig2.classList.remove("side_item_td_ambigous");
+		ambig3.classList.remove("side_item_td_ambigous");
+	}
 }
 
 function hide_elm(elm) {

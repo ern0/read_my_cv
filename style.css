@@ -60,10 +60,10 @@ body {
 }
 .side_item_label {
 	text-align: right;
-	padding-right: 0.3em;
+	padding: 0 0.3em 0 0.3em;
 }
 .side_item_td_ambigous {
-	background: #ffddcc;
+	background: #ffccbb;
 }
 
 .column {

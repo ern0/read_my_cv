@@ -228,7 +228,7 @@ function render_sidepanel_item_label(tag) {
 	content += " id=" + quote("ambig_label_" + tag);
 	content += " class=" + quote("side_item_label");
 	content += ">";
-	content += tag;
+	content += tag + "&nbsp;";
 	content += "</td>";
 
 	return content;

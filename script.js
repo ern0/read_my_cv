@@ -20,23 +20,38 @@ document.addEventListener("DOMContentLoaded", main);
 
 function main() {
 
-	collect_dom_tags();
-	parse_url();
-	update_url();
+	app = {};
+
+	if ((typeof window.location.url) == "undefined") return;
+	render_web();
 	create_sidepanel();
 
 }
 
-function hide_sidepanel() {
+function render_web() {
+
+	app.url = window.location.href;
+	render();
+}
+
+function render_pdf(parm_url) {
+
+	app.url = parm_url;
+	render();
 
 	var elms = document.querySelectorAll("[class=side]");
 	elms[0].style.display = "none";
+}
 
+function render() {
+
+	collect_dom_tags();
+	parse_url();
+	update_url();
 }
 
 function collect_dom_tags() {
 
-	app = {}
 	app.tags = {};
 	app.sets = {}
 
@@ -64,13 +79,19 @@ function collect_dom_tags() {
 
 function parse_url() {
 
-	url_params = new URLSearchParams(window.location.search);
+	var a = app["url"].split("?")[1].split("&");
+	var url_parms = {}
+
+	for (index = 0; index < a.length; index++) {
+		var parm = a[index].split("=");
+		url_parms[parm[0]] = parm[1];
+	}
 
 	var verbs = ["show", "hide"];
 	for (var verb_index = 0; verb_index < verbs.length; verb_index++) {
 		var verb = verbs[verb_index];
 
-		var tags = url_params.get(verb);
+		var tags = url_parms[verb];
 		if (tags == null) continue;
 
 		var tag_list = tags.split(",");
@@ -228,7 +249,7 @@ function render_sidepanel_item_label(tag) {
 	content += " id=" + quote("ambig_label_" + tag);
 	content += " class=" + quote("side_item_label");
 	content += ">";
-	content += tag + "&nbsp;";
+	content += "&nbsp;" + tag + "&nbsp;";
 	content += "</td>";
 
 	return content;

@@ -53,6 +53,7 @@ body {
 }
 .side_item_td {
 	text-align: center;
+	padding: 0 2pt 0 2pt;
 }
 .side_item_checkbox {
 	width: 15pt;

@@ -291,6 +291,7 @@ function widget_clicked(id) {
 	}
 
 	update_url();
+	update_version();
 }
 
 function proc_click_tag_show(tag, verb) {
@@ -360,16 +361,24 @@ function update_version() {
 	var elm = document.getElementById("email");
 	if (elm == null) return;
 
+	var email = elm.href;
+	var a = email.split("@");
+	var user = a[0].split("_")[0];
+	var domain = a[1];
+
 	var show = "";
 	for (var tag in app.tags) {
+		if (app.tags[tag] != "show") continue;
 		if (show != "") show += "X";
 		show += tag;
 	}
 	for (var set in app.sets) {
+		if (app.sets[set][0] != "show") continue;
 		if (show != "") show += "X";
 		show += set.replace("-","N");
 	}
-	elm.href = elm.href.replace("@", "__" + show + "@");
+
+	elm.href = user + "_" + show + "@" + domain;
 }
 
 function hide_elm(elm) {

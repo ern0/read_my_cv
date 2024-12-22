@@ -18,29 +18,20 @@
 
 document.addEventListener("DOMContentLoaded", main);
 
-function main() {
+function main(url) {
 
 	app = {};
 
-	if ((typeof window.location.url) == "undefined") return;
-	render_web();
-	create_sidepanel();
+	if (typeof url == "string") {
+		app.url = url;
+		render();
+		hide_sidepanel();
+	} else {
+		app.url = window.location.href;
+		render();
+		create_sidepanel();
+	}
 
-}
-
-function render_web() {
-
-	app.url = window.location.href;
-	render();
-}
-
-function render_pdf(parm_url) {
-
-	app.url = parm_url;
-	render();
-
-	var elms = document.querySelectorAll("[class=side]");
-	elms[0].style.display = "none";
 }
 
 function render() {
@@ -48,6 +39,7 @@ function render() {
 	collect_dom_tags();
 	parse_url();
 	update_url();
+	update_version();
 }
 
 function collect_dom_tags() {
@@ -79,7 +71,7 @@ function collect_dom_tags() {
 
 function parse_url() {
 
-	var a = app["url"].split("?")[1].split("&");
+	var a = app.url.split("?")[1].split("&");
 	var url_parms = {}
 
 	for (index = 0; index < a.length; index++) {
@@ -156,6 +148,11 @@ function update_url() {
 function create_sidepanel() {
 	var sidepanel = document.querySelector(".side");
 	sidepanel.innerHTML = render_sidepanel();
+}
+
+function hide_sidepanel() {
+	var elms = document.querySelectorAll("[class=side]");
+	elms[0].style.display = "none";
 }
 
 function render_sidepanel() {
@@ -356,6 +353,23 @@ function proc_adjust_auto(set) {
 		ambig2.classList.remove("side_item_td_ambigous");
 		ambig3.classList.remove("side_item_td_ambigous");
 	}
+}
+
+function update_version() {
+
+	var elm = document.getElementById("email");
+	if (elm == null) return;
+
+	var show = "";
+	for (var tag in app.tags) {
+		if (show != "") show += "X";
+		show += tag;
+	}
+	for (var set in app.sets) {
+		if (show != "") show += "X";
+		show += set.replace("-","N");
+	}
+	elm.href = elm.href.replace("@", "__" + show + "@");
 }
 
 function hide_elm(elm) {

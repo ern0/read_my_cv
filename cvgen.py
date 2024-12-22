@@ -4,6 +4,8 @@ import sys
 
 class Render:
 
+    VERSION = "2024c"
+
     def __init__(self):
         self.level = 0
         self.nodes = {}
@@ -19,7 +21,7 @@ class Render:
         if self.need_indent:
             print("  " * self.level, end="")
             self.need_indent = False
-        print(text, end="")
+        print(text , end="")
 
     def eol(self):
         self.text("\n")
@@ -40,7 +42,7 @@ class Render:
         if single_shot:
             self.text(" /")
         self.text(">")
-        if node_type != "span":
+        if node_type != "span" and node_type != "a":
             if not no_eol:
                 self.eol()
 
@@ -74,17 +76,22 @@ class Render:
 
     def link(self, url):
 
+        url = url.replace("@", "+" + self.VERSION + "@")
         text = url
+        attrs = []
 
         if "@" in url:
-            if url.startswith("mailto:"):
-                text = url.split(":")[1]
+            attrs.append( ("id", "email",) )
+            if not url.startswith("mailto:"):
+                url = "mailto:" + url
         else:
             if not url.startswith("http"):
                 url = "https://" + url
                 text = url
 
-        self.open("a", [ ("href", url) ])
+        attrs.append( ("href", url,) )
+
+        self.open("a", attrs)
         self.text(text)
         self.close_last()
 

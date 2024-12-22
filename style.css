@@ -3,7 +3,7 @@ html, body, div, td, li {
 	padding: 0;
 	margin: 0;
 	font-family:'Times New Roman', Times, serif;
-	font-size: 21pt;
+	font-size: 14pt;
 }
 body {
 	background: #333333;
@@ -69,7 +69,6 @@ body {
 .column {
 	position: absolute;
 	top: 0;
-	padding: 2pt;
 	margin: 0;
 	padding: 0;
 }
@@ -88,31 +87,31 @@ body {
 
 .title {
 	font-style: italic;
-	font-size: 30pt;
-	margin-left: 10pt;
+	font-size: 17pt;
+	margin-left: 7pt;
 }
 .section {
-	padding: 0 10pt 0 10pt;
+	padding: 0 7pt 0 7pt;
 }
 .field {}
 .field_name {
-	font-size: 50pt;
+	font-size: 38pt;
 }
 .field_position {
 	font-style: italic;
-	font-size: 28pt;
+	font-size: 18pt;
 }
 .section_title {
 	text-align: center;
-	margin-bottom: 20pt;
+	margin-bottom: 18pt;
 }
 .image {
 	position: absolute;
 	right: -10pt;
-	width: 100pt;
+	width: 70pt;
 }
 .section_contact {
-	margin-bottom: 30pt;
+	margin-bottom: 24pt;
 }
 .section_contact div,
 .section_contact a,
@@ -131,15 +130,15 @@ body {
 .field_email {}
 .field_github {}
 .feature_contact_icon {
-	width: 25pt;
+	width: 20pt;
 	position: relative;
-	top: 8pt;
-	margin-right: 13pt;
+	top: 6pt;
+	margin-right: 6pt;
 	margin-left: 2pt;
 }
 
 .section_skills {
-	margin-bottom: 20pt;
+	margin-bottom: 16pt;
 }
 .field_skills {
 	padding: 0;
@@ -157,31 +156,34 @@ body {
 }
 
 .section_intro {
-	text-indent: 5pt;
+	text-indent: 3pt;
 	text-align: justify;
 	margin: 10pt 11pt 10pt 0;
 }
-.para_intro {}
+.para_intro {
+	padding: 0 0 3pt 0;
+}
 
 .section_experience {
-	margin: 5pt 0 5pt 0;
+	margin: 2pt 0 2pt 0;
 }
 .exp_table, .edu_table {
 	width: 100%;
 }
 .exp_tr, .edu_tr {}
 .exp_td_left, .edu_td_left {
-	padding: 0 5pt 0 5pt;
+	padding: 0 3pt 0 3pt;
 
 	vertical-align: top;
+	text-align: center;
 	width: 12%;
 	min-height: 100%;
 }
 .exp_td_right, .edu_td_right {
-	padding: 0 5pt 4pt 9pt;
+	padding: 0 3pt 2pt 5pt;
 }
 .exp_heading {
-	margin-bottom: 10pt;
+	margin-bottom: 3pt;
 }
 .field_role {
 	font-weight: bold;
@@ -190,21 +192,21 @@ body {
 	font-style: italic;
 }
 .field_expitem {
-	margin-top: 5pt;
+	margin-top: 3pt;
 }
 .exp_ul {
 	margin: 0;
-	padding: 0 0 0 28pt;
+	padding: 0 0 0 14pt;
 }
 .field_expbullet {
-	margin-top: 2pt;
+	margin-top: 1pt;
 	list-style-position: outside;
 }
 .lang {
 	font-family: monospace;
-	font-size: 15pt;
-	border: 1px solid #aaaaaa;
-	border-radius: 7pt;
+	font-size: 11pt;
+	border: 1px solid #cccccc;
+	border-radius: 4pt;
 	background: #eeeeee;
 	color: #666666;
 	padding: 0 6pt 0 6pt;

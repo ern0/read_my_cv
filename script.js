@@ -40,6 +40,7 @@ function render() {
 	parse_url();
 	update_url();
 	update_version();
+	update_page();
 }
 
 function collect_dom_tags() {
@@ -71,7 +72,9 @@ function collect_dom_tags() {
 
 function parse_url() {
 
-	var a = app.url.split("?")[1].split("&");
+	var a = app.url.split("?")
+	if (a.length < 2) return;
+	var a = a[1].split("&");
 	var url_parms = {}
 
 	for (index = 0; index < a.length; index++) {
@@ -292,6 +295,7 @@ function widget_clicked(id) {
 
 	update_url();
 	update_version();
+	update_page();
 }
 
 function proc_click_tag_show(tag, verb) {
@@ -379,6 +383,31 @@ function update_version() {
 	}
 
 	elm.href = user + "_" + show + "@" + domain;
+}
+
+function update_page() {
+
+	for (var tag in app.tags) {
+		var elms = document.getElementsByClassName("tag_" + tag);
+		update_page_elms(elms, app.tags[tag]);
+	}
+
+	for (var set in app.sets) {
+		var elms = document.getElementsByClassName("tag_" + set.replace("-"," "));
+		update_page_elms(elms, app.sets[set][0]);
+	}
+}
+
+function update_page_elms(elms, verb) {
+
+	for (var index = 0; index < elms.length; index++) {
+		var elm = elms[index];
+		if (verb == "show") {
+			show_elm(elm);
+		} else {
+			hide_elm(elm);
+		}
+	}
 }
 
 function hide_elm(elm) {

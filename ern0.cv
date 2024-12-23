@@ -3,7 +3,7 @@ Zalka Ernő
 Software Engineer #dev
 Test Engineer #test
 
----- contact #dev #test ----
+---- contact ----
 Fót, Hungary
 +36 20 9739213
 ern0plus4@gmail.com
@@ -15,13 +15,13 @@ C++ ★★★★★
 Python ★★★★★
 Linux Dev ****
 Microservices ★★★★☆
-Embedded Systems ★★★★★
+Embedded Systems ★★★★★ #embedded
 Rust ***
 SQL ★★★★☆
 Key-Value DB ★★★★☆
 PHP ★★★★★
 JavaScript ★★★★☆
-HTML/CSS ★★★★☆
+HTML/CSS ★★★★☆ #web
 Java ★★★☆☆
 Assembly, Demoscene ★★★☆☆
 OOP Design ★★★★★
@@ -29,7 +29,7 @@ Documentation ★★★★★
 Multithreading ★★★★☆
 Dataflow Systems ★★★★★
 Unit Testing ★★★★☆
-Integration Testing ★★★★★
+Integration Testing ★★★★★ #test
 GIT ★★★★★
 Mentoring, Teaching ★★★★☆
 MUMPS ★★★★★
@@ -69,90 +69,187 @@ Work on open-source database platform:
 Principal C++ Developer
 Harman-Kardon Kft.
 
-Maintain automotive modules [C++]
+Maintain automotive modules [C++] #embedded
 
 ---- experience ----
 2022−2023
 Principal C Developer
 AI Fleet (USA-HU startup)
 
-Create USA route map cache (C, Python, AWS)
-Optimize solver algorithm (C)
+Create USA route map cache [C] [Python] [AWS]
+Optimize solver algorithm [C]
 
 ---- experience ----
-
 2019−2022
 Embedded Systems Developer
 Heitec Kft
 
-Test framework for testing the company’s own manufactured PC [Python]
-Create test applications for embedded devices [C] [C++]
-Implement healthcare product firmware [C]
+Test framework for testing the company’s own manufactured PC [Python] #test
+Create test applications for embedded devices [C] [C++] #test #embedded
+Implement healthcare product firmware [C] #embedded
 
 ---- experience ----
-
 2017−2019
 Principal C++ Developer
 CAE Engineering Kft
 
-Implement flight simulator functions (C++)
-Design and implement tools (Python)
+Implement flight simulator functions [C++]
+Design and implement tools [Python]
+
+---- experience #sideproject ----
+2019
+Author
+side project: ShrinkShot
+
+Utility which cut empty areas from an image, typically a screenshot of a program window [C] [ImageMagick]
+
+Source code available: https://github.com/ern0/shrinkshot
 
 ---- experience ----
-
 2016−2017
 Full-Stack Developer, Quality Lead
 EcoStudio Kft
 
 Build microservices architecture application and tests [Node.js] [RabbitMQ] [Haxe] [RethinkDB]
 
----- experience #web ----
+---- experience #sideproject ----
+2015
+Author
+side project: Posixino
 
+Re-implementation of Arduino framework and some important libraries and features for Mac and GNU/Linux [C++] [SDL2]
+
+Implemented features: serial, digital out, web client, web server, LCD, timer interrupt, Adafruit NeoPixel
+
+Although, it’s not an emulator, it makes embedded development just as comfortable as regular C programming is. With Posixino, C code can be tested on Mac or Linux
+
+Source code available: https://github.com/ern0/posixino
+
+---- experience ----
 2013−2016
 Senior Full-Stack Developer
 Netavis Kft
 
-Mobile-first web app for video monitoring system
+Mobile-first web app for video monitoring system #web
+
+---- experience #sideproject #web ----
+2016
+Author
+Side project: KolorWheel.js
+
+JavaScript library, palette generator using HSL color space
+
+A KolorWheel object represents a color, further objects can obtained by calling absoulte and relative item generator methods, finally resulting a palette
+
+Source code and documentation with examples: https://github.com/ern0/kolorwheel.js/
 
 ---- experience ----
-
 2011−2013
 Senior Embedded and Systems Developer
 Intep Kft
 
-Outdoor LED wall firmware, font, autokerning renderer
+Outdoor LED wall firmware, font, autokerning renderer #embedded
 Payment kiosk firmware, GUI [JavaScript]
 Modular datasheet creator system [PHP]
 
 ---- experience ----
-
 2006−2011
 Systems Architect, Developer
 Porion Kft, Bitklub Kft
 
-Digital television (DVB) SI/EPG inserter [C++], admin UI [HTML]
-Hierarchical web form editor framework [PHP] #web
+Digital television (DVB) SI/EPG inserter
+* system design and implementation [C++]
+* SI/EPG administration backend and admin UI [PHP] [JavaScript]
+* The competition is suspected us of stealing the EPG system of Conax, the industry leader software (which is slow and expensive)
+* In 2021, the system is still used at various cable providers
+
+Video stream jukebox server design and implementation [C++]
+
+---- experience #sideproject ----
+2009
+Author
+side project: XmlGraph
+
+Utility which discovers given XML, then renders a visual documentation of it [PHP] [HTML] [CSS] [GraphViz]
+
+Source code available: https://github.com/ern0/xmlgraph
+
+---- experience #sideproject ----
+2007
+Co-author
+side project: iHome dataflow system
+
 Home automation-purpose dataflow sytem prototype
+* Framework is written in pure C++, using only stdlib and pthreads [C++]
+* Transpiler from DF script to C++ [PHP] [C++]
+* We created 80 components [C++]
+
+Mobile-first web UI [JavaScript]
+
+Also created an editor UI concept [JavaScript] [Raphaël.js] [SVG]
+* source code: https://github.com/ern0/dataflow-editor-concept
+* presentation on YouTube (Hungarian, 25 mins): https://www.youtube.com/watch?v=s86zrAdW7Yc
+
+---- experience #sideproject ----
+2007
+Co-author
+side project: Plannr
+
 Collaborative spreadsheet concept and prototype
+* backend engine [PHP] [MySQL]
+* web UI [JavaScript] [HTNL] [CSS]
+* general components, ca. 10-15 [PHP]
+* Demand planning purpose components written by co-author
 
----- experience ----
-
+---- experience #web ----
 2000−2006
 Full-Stack Developer, SEO expert, CTO
 Index.hu Rt, Rakit Kft, Well-Press Kft
 
-Design, implement, SEO and run touristic portal [PHP]
-Create GUI tool for measuring SEO results [Java]
+Design, implement, SEO and run touristic portal [PHP] [HTML] [CSS] [SQL]
+
+Design and implement Google position rank monitoring tool for support and measure SEO results [Java] [PHP] [HTML] [CSS] [SQL]
+
 Implement simple ad server [PHP]
 
----- education ----
+---- experience ----
+Nokia Hungary Kft, NWSS
+Software Developer
+1999-2000
 
+Creating games for WAP enabled mobile phones [JAVA] [WML]
+File patents (ca. 2-3)
+
+---- experience #ERP ----
+Grabo Holding, Uniontext Kft.
+IT Department Leader (CIO)
+1996-1999
+
+Set up a complete software development and operation department almost from ground, run entire company’s IT
+
+ISO 9001 compilant logistic system design and supervision
+
+Preliminary cost calculation system design
+
+---- experience #ERP ----
+Grabo Holding, Graboplast Kft.
+1989-1996
+Developer
+
+Write business applications and modules for locally developed ERP system [MUMPS]
+
+Create UI frameworks [MUMPS]
+
+MS-DOS – Unix inter-system data transfer protocol design, implementation [Assembler] [8086]
+
+Stock Register Book system design, backend imeplementation [dBase[ [FoxPro]
+
+---- education ----
 1989-1993
 Széchenyi István Egyetem, Győr
 Software Developer
 
 ---- education ----
-
 1985-1989
 Deák Ferenc SZKI, Győr
 IT System Organizer

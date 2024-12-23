@@ -415,6 +415,10 @@ class Gen:
                 feat = "company"
                 break
 
+        chk = self.line.lower().replace("(","").replace(")","")
+        if "project" in chk:
+            feat = "company"
+
         return feat
 
     def normalize_period(self, feat):

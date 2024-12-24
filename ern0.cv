@@ -1,7 +1,7 @@
 ---- title ----
 Zalka Ernő
-Software Engineer #dev
-Test Engineer #test
+Software Engineer #titledev
+Test Engineer #titletest
 
 ---- contact ----
 Fót, Hungary
@@ -19,7 +19,7 @@ Embedded Systems ★★★★★ #embedded
 Rust ***
 SQL ★★★★☆
 Key-Value DB ★★★★☆
-PHP ★★★★★
+PHP ★★★★★ #web
 JavaScript ★★★★☆
 HTML/CSS ★★★★☆ #web
 Java ★★★☆☆
@@ -33,7 +33,7 @@ Integration Testing ★★★★★ #test
 GIT ★★★★★
 Mentoring, Teaching ★★★★☆
 MUMPS ★★★★★
-ERP ★★★★★
+ERP ★★★★★ #erp
 Image Editing, GIMP **
 Music Production *****
 
@@ -51,8 +51,9 @@ Not only creates clean, modular,
 maintainable code, but inspires and helps others to do the same,
 educates and supports young talents.
 
-Enjoyed programming since teenager age and still does.
-Actual brain problem: learning Rust, created first crate and
+Enjoyed programming since teenager age and still does. Last
+achievement: leaned Rust basics,
+created and published first crate,
 working on a larger multi-client system.
 
 ---- experience ----
@@ -110,9 +111,11 @@ Source code available: https://github.com/ern0/shrinkshot
 Full-Stack Developer, Quality Lead
 EcoStudio Kft
 
-Build microservices architecture application and tests [Node.js] [RabbitMQ] [Haxe] [RethinkDB]
+Build microservices architecture application [Node.js] [RabbitMQ] [Haxe] [RethinkDB]
 
----- experience #sideproject ----
+Create microservice tests [Python] [Haxe]
+
+---- experience #sideproject #embedded ----
 2015
 Author
 side project: Posixino
@@ -174,7 +177,7 @@ Utility which discovers given XML, then renders a visual documentation of it [PH
 
 Source code available: https://github.com/ern0/xmlgraph
 
----- experience #sideproject ----
+---- experience #sideproject #dataflow ----
 2007
 Co-author
 side project: iHome dataflow system
@@ -190,7 +193,7 @@ Also created an editor UI concept [JavaScript] [Raphaël.js] [SVG]
 * source code: https://github.com/ern0/dataflow-editor-concept
 * presentation on YouTube (Hungarian, 25 mins): https://www.youtube.com/watch?v=s86zrAdW7Yc
 
----- experience #sideproject ----
+---- experience #sideproject #erp #dataflow ----
 2007
 Co-author
 side project: Plannr
@@ -220,7 +223,7 @@ Software Developer
 Creating games for WAP enabled mobile phones [JAVA] [WML]
 File patents (ca. 2-3)
 
----- experience #ERP ----
+---- experience #erp ----
 Grabo Holding, Uniontext Kft.
 IT Department Leader (CIO)
 1996-1999
@@ -231,7 +234,7 @@ ISO 9001 compilant logistic system design and supervision
 
 Preliminary cost calculation system design
 
----- experience #ERP ----
+---- experience #erp ----
 Grabo Holding, Graboplast Kft.
 1989-1996
 Developer

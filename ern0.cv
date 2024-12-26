@@ -65,6 +65,16 @@ Work on open-source database platform:
 * Create integration tests [CSH] [Expect] [MUMPS]
 * Implement/fix platform modules [C] [Rust]
 
+---- experience #sideproject ----
+2023
+Author
+Side project: KolorWheel.rs
+
+Color palette generator for Rust, with egui.rs examples (similar to Kolorwheel.js)
+
+Source: https://github.com/ern0/kolorwheel.rs/
+Crate: https://crates.io/crates/kolorwheel
+
 ---- experience ----
 2023
 Principal C++ Developer

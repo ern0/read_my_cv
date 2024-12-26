@@ -94,6 +94,15 @@ body {
 	padding: 0 7pt 0 7pt;
 }
 .field {}
+.link,
+.link:hover,
+.link:active,
+.link:visited {
+	font-style: italic;
+	color: #666666;
+	text-decoration: underline;
+}
+
 .field_name {
 	font-size: 38pt;
 }

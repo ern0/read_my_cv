@@ -17,11 +17,42 @@ class Render:
     def undent(self):
         self.level -= 1
 
-    def text(self, text):
+    def text(self, text, urls_to_link=True):
+
         if self.need_indent:
             print("  " * self.level, end="")
             self.need_indent = False
+
+        if urls_to_link:
+            text = self.convert_urls_to_links(text)
+
         print(text , end="")
+
+    def convert_urls_to_links(self, text):
+
+        if (not "http://" in text) and (not "https://" in text):
+            return text
+
+        a = text.split(" ")
+        for index in range(len(a)):
+            if not a[index].startswith("http://") and (not a[index].startswith("https://")):
+                continue
+            a[index] = self.u2l(a[index])
+
+        text = " ".join(a)
+        return text
+
+    def u2l(self, url):
+
+        result = "<a"
+        result += " href=\"" + url + "\""
+        result += " class=\"link\""
+        result += " target=\"_blank\""
+        result += ">"
+        result += url
+        result += "</a>"
+
+        return result
 
     def eol(self):
         self.text("\n")
@@ -92,7 +123,7 @@ class Render:
         attrs.append( ("href", url,) )
 
         self.open("a", attrs)
-        self.text(text)
+        self.text(text, urls_to_link=False)
         self.close_last()
 
     def img(self, file, cls):
@@ -100,7 +131,7 @@ class Render:
         attrib_list = [ ("src", file,), ("class", cls,) ]
         self.open("img", attrib_list, True)
 
-    def close_last(self, no_eol=False):
+    def close_last(self, no_eol=True):
 
         self.undent()
 

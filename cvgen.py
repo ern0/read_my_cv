@@ -153,6 +153,7 @@ class Gen:
         self.is_ul_close_needed = False
         self.is_intro_first_line = True
         self.is_intro_open_para = True
+        self.is_last_line_empty = False
 
     def main(self):
 
@@ -305,6 +306,7 @@ class Gen:
             self.proc_item_intro()
 
         if self.line == "":
+            self.is_last_line_empty = True
             return
 
         if self.section_type == "title":
@@ -320,6 +322,7 @@ class Gen:
         elif self.section_type == "education":
             self.proc_item_education()
 
+        self.is_last_line_empty = False
         self.is_first_line = False
 
     def proc_item_title(self):
@@ -505,6 +508,9 @@ class Gen:
             self.render.close_last()
 
     def proc_item_exp_body(self):
+
+        if self.line[0] != "*" and self.is_last_line_empty and self.is_ul_close_needed:
+            self.close_exp_ul_if_needed()
 
         text = self.line
         text = text.replace("[", "<span class=\"lang\">")

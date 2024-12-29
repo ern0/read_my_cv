@@ -52,7 +52,7 @@ maintainable code, but inspires and helps others to do the same,
 educates and supports young talents.
 
 Enjoyed programming since teenager age and still does. Last
-achievement: leaned Rust basics,
+achievement: learned Rust basics,
 created and published first crate,
 working on a larger multi-client system.
 
@@ -95,8 +95,8 @@ Optimize solver algorithm [C]
 Embedded Systems Developer
 Heitec Kft
 
-Test framework for testing the company’s own manufactured PC [Python] #test
-Create test applications for embedded devices [C] [C++] #test #embedded
+Test framework for testing the company’s own manufactured PC, generates print-ready report [Python] [PDF] #test
+Create test applications and counterpart tester devices for embedded devices [C] [C++] #test #embedded
 Implement healthcare product firmware [C] #embedded
 
 ---- experience ----
@@ -134,7 +134,7 @@ Re-implementation of Arduino framework and some important libraries and features
 
 Implemented features: serial, digital out, web client, web server, LCD, timer interrupt, Adafruit NeoPixel
 
-Although, it’s not an emulator, it makes embedded development just as comfortable as regular C programming is. With Posixino, C code can be tested on Mac or Linux
+It’s not an emulator, but it makes embedded development just as comfortable as regular C programming is. With Posixino, C code can be tested on Mac or Linux
 
 Source code available: https://github.com/ern0/posixino
 
@@ -152,7 +152,10 @@ Side project: KolorWheel.js
 
 JavaScript library, palette generator using HSL color space
 
-A KolorWheel object represents a color, further objects can obtained by calling absoulte and relative item generator methods, finally resulting a palette
+A KolorWheel object represents a color,
+further objects can obtained
+by calling absoulte and relative item generator methods,
+finally resulting a palette
 
 Source code and documentation with examples: https://github.com/ern0/kolorwheel.js/
 
@@ -162,8 +165,8 @@ Senior Embedded and Systems Developer
 Intep Kft
 
 Outdoor LED wall firmware, font, autokerning renderer #embedded
-Payment kiosk firmware, GUI [JavaScript]
-Modular datasheet creator system [PHP]
+Payment kiosk firmware (backend) and GUI [JavaScript]
+Modular datasheet creator system [PHP] [HTML] [CSS] [PDF]
 
 ---- experience ----
 2006−2011
@@ -193,9 +196,9 @@ Co-author
 side project: iHome dataflow system
 
 Home automation-purpose dataflow sytem prototype
-* Framework is written in pure C++, using only stdlib and pthreads [C++]
+* Framework is written in minimal C++, using only stdlib and pthreads [C++]
 * Transpiler from DF script to C++ [PHP] [C++]
-* We created 80 components [C++]
+* We created ca. 80 components [C++]
 
 Mobile-first web UI [JavaScript]
 
@@ -255,7 +258,7 @@ Create UI frameworks [MUMPS]
 
 MS-DOS – Unix inter-system data transfer protocol design, implementation [Assembler] [8086]
 
-Stock Register Book system design, backend imeplementation [dBase[ [FoxPro]
+Stock Register Book system design, backend imeplementation [dBase] [FoxPro]
 
 ---- education ----
 1989-1993

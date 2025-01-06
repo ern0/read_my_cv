@@ -56,7 +56,7 @@ achievement: learned Rust basics,
 created and published first crate,
 working on a larger multi-client system.
 
----- experience ----
+---- experience #native #budapest ----
 2023-2024
 Test engineer
 YottaDB LLC, contractor
@@ -65,7 +65,7 @@ Work on open-source database platform:
 * Create integration tests [CSH] [Expect] [MUMPS]
 * Implement/fix platform modules [C] [Rust]
 
----- experience #sideproject ----
+---- experience #sideproject #native ----
 2023
 Author
 Side project: KolorWheel.rs
@@ -75,14 +75,14 @@ Color palette generator for Rust, with egui.rs examples (similar to Kolorwheel.j
 Source: https://github.com/ern0/kolorwheel.rs/
 Crate: https://crates.io/crates/kolorwheel
 
----- experience ----
+---- experience #native #budapest ----
 2023
 Principal C++ Developer
 Harman-Kardon Kft.
 
-Maintain automotive modules [C++] #embedded
+Maintain automotive modules [C++] #native
 
----- experience ----
+---- experience #native #budapest ----
 2022−2023
 Principal C Developer
 AI Fleet (USA-HU startup)
@@ -90,7 +90,7 @@ AI Fleet (USA-HU startup)
 Create USA route map cache [C] [Python] [AWS]
 Optimize solver algorithm [C]
 
----- experience ----
+---- experience #embedded #budapest ----
 2019−2022
 Embedded Systems Developer
 Heitec Kft
@@ -99,7 +99,7 @@ Test framework for testing the company’s own manufactured PC, generates print-
 Create test applications and counterpart tester devices for embedded devices [C] [C++] #test #embedded
 Implement healthcare product firmware [C] #embedded
 
----- experience ----
+---- experience #native #budapest ----
 2017−2019
 Principal C++ Developer
 CAE Engineering Kft
@@ -107,7 +107,7 @@ CAE Engineering Kft
 Implement flight simulator functions [C++]
 Design and implement tools [Python]
 
----- experience #sideproject ----
+---- experience #sideproject #native ----
 2019
 Author
 side project: ShrinkShot
@@ -116,7 +116,7 @@ Utility which cut empty areas from an image, typically a screenshot of a program
 
 Source code available: https://github.com/ern0/shrinkshot
 
----- experience ----
+---- experience #web #budapest ----
 2016−2017
 Full-Stack Developer, Quality Lead
 EcoStudio Kft
@@ -138,12 +138,13 @@ It’s not an emulator, but it makes embedded development just as comfortable as
 
 Source code available: https://github.com/ern0/posixino
 
----- experience ----
+---- experience #web #budapest ----
 2013−2016
 Senior Full-Stack Developer
 Netavis Kft
 
-Mobile-first web app for video monitoring system #web
+Mobile-first web app for video monitoring system
+Smaller utils in Java #java
 
 ---- experience #sideproject #web ----
 2016
@@ -159,16 +160,16 @@ finally resulting a palette
 
 Source code and documentation with examples: https://github.com/ern0/kolorwheel.js/
 
----- experience ----
+---- experience #embedded #budapest ----
 2011−2013
 Senior Embedded and Systems Developer
 Intep Kft
 
 Outdoor LED wall firmware, font, autokerning renderer #embedded
-Payment kiosk firmware (backend) and GUI [JavaScript]
-Modular datasheet creator system [PHP] [HTML] [CSS] [PDF]
+Payment kiosk firmware (backend) and GUI [JavaScript] #web
+Modular datasheet creator system [PHP] [HTML] [CSS] [PDF] #web
 
----- experience ----
+---- experience #native #budapest ----
 2006−2011
 Systems Architect, Developer
 Porion Kft, Bitklub Kft
@@ -177,9 +178,9 @@ Digital television (DVB) SI/EPG inserter
 * system design and implementation [C++]
 * SI/EPG administration backend and admin UI [PHP] [JavaScript]
 * The competition is suspected us of stealing the EPG system of Conax, the industry leader software (which is slow and expensive)
-* In 2021, the system is still used at various cable providers
+* In 2025, the system is still used at various cable providers
 
-Video stream jukebox server design and implementation [C++]
+Video stream jukebox server design and implementation [C++] #native
 
 ---- experience #sideproject ----
 2009
@@ -190,7 +191,7 @@ Utility which discovers given XML, then renders a visual documentation of it [PH
 
 Source code available: https://github.com/ern0/xmlgraph
 
----- experience #sideproject #dataflow ----
+---- experience #sideproject #dataflow #native ----
 2007
 Co-author
 side project: iHome dataflow system
@@ -217,18 +218,18 @@ Collaborative spreadsheet concept and prototype
 * general components, ca. 10-15 [PHP]
 * Demand planning purpose components written by co-author
 
----- experience #web ----
+---- experience #web #budapest ----
 2000−2006
 Full-Stack Developer, SEO expert, CTO
 Index.hu Rt, Rakit Kft, Well-Press Kft
 
 Design, implement, SEO and run touristic portal [PHP] [HTML] [CSS] [SQL]
 
-Design and implement Google position rank monitoring tool for support and measure SEO results [Java] [PHP] [HTML] [CSS] [SQL]
+Design and implement Google position rank monitoring tool for support and measure SEO results [Java] [PHP] [HTML] [CSS] [SQL] #java
 
 Implement simple ad server [PHP]
 
----- experience ----
+---- experience #java #budapest ----
 Nokia Hungary Kft, NWSS
 Software Developer
 1999-2000
@@ -236,7 +237,7 @@ Software Developer
 Creating games for WAP enabled mobile phones [JAVA] [WML]
 File patents (ca. 2-3)
 
----- experience #erp ----
+---- experience #erp #gyor ----
 Grabo Holding, Uniontext Kft.
 IT Department Leader (CIO)
 1996-1999
@@ -247,7 +248,7 @@ ISO 9001 compilant logistic system design and supervision
 
 Preliminary cost calculation system design
 
----- experience #erp ----
+---- experience #erp #gyor ----
 Grabo Holding, Graboplast Kft.
 1989-1996
 Developer
@@ -256,7 +257,7 @@ Write business applications and modules for locally developed ERP system [MUMPS]
 
 Create UI frameworks [MUMPS]
 
-MS-DOS – Unix inter-system data transfer protocol design, implementation [Assembler] [8086]
+MS-DOS – Unix inter-system data transfer protocol design, implementation [Assembler] [8086] #native
 
 Stock Register Book system design, backend imeplementation [dBase] [FoxPro]
 

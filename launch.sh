@@ -18,6 +18,6 @@ wkhtmltopdf \
     --page-size A4 \
     --zoom 0.95 \
     \
-    cv.html cv.pdf
+    cv.html zalka_erno-cv_2025a.pdf
 
-open cv.pdf
+open *cv*.pdf

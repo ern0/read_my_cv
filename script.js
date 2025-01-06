@@ -422,12 +422,21 @@ function update_version() {
 function update_page() {
 
 	for (var tag in app.tags) {
-		var elms = document.getElementsByClassName("tag_" + tag);
+		var selector = "tag_" + tag;
+		var elms = document.getElementsByClassName(selector);
 		update_page_elms(elms, app.tags[tag]);
 	}
 
 	for (var set in app.sets) {
-		var elms = document.getElementsByClassName("tag_" + set.replace("-"," "));
+		var tag_list = set.split("-")
+
+		var selector = "";
+		for (var tag_index in tag_list) {
+			var tag = tag_list[tag_index];
+			if (selector != "") selector += " ";
+			selector += "tag_" + tag;
+		}
+		var elms = document.getElementsByClassName(selector);
 		update_page_elms(elms, app.sets[set][0]);
 	}
 }

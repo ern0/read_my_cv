@@ -56,41 +56,38 @@ achievement: learned Rust basics,
 created and published first crate,
 working on a larger multi-client system.
 
----- experience #native #budapest ----
+---- experience ----
 2023-2024
 Test engineer
 YottaDB LLC, contractor
 
 Work on open-source database platform:
-* Create integration tests [CSH] [Expect] [MUMPS]
+* Create integration tests [CSH] [Expect] [TCL] [MUMPS]
 * Implement/fix platform modules [C] [Rust]
 
----- experience #sideproject #native ----
+---- experience #sideproject #rust ----
 2023
 Author
 Side project: KolorWheel.rs
 
-Color palette generator for Rust, with egui.rs examples (similar to Kolorwheel.js)
+Color palette generator for Rust, with egui.rs examples (similar to Kolorwheel.js): https://github.com/ern0/kolorwheel.rs/
 
-Source: https://github.com/ern0/kolorwheel.rs/
-Crate: https://crates.io/crates/kolorwheel
-
----- experience #native #budapest ----
+---- experience ----
 2023
 Principal C++ Developer
 Harman-Kardon Kft.
 
-Maintain automotive modules [C++] #native
+Maintain automotive modules and tests [C++]
 
----- experience #native #budapest ----
+---- experience ----
 2022−2023
 Principal C Developer
-AI Fleet (USA-HU startup)
+AI Fleet Kft (USA-HU startup)
 
 Create USA route map cache [C] [Python] [AWS]
 Optimize solver algorithm [C]
 
----- experience #embedded #budapest ----
+---- experience ----
 2019−2022
 Embedded Systems Developer
 Heitec Kft
@@ -99,24 +96,22 @@ Test framework for testing the company’s own manufactured PC, generates print-
 Create test applications and counterpart tester devices for embedded devices [C] [C++] #test #embedded
 Implement healthcare product firmware [C] #embedded
 
----- experience #native #budapest ----
+---- experience ----
 2017−2019
 Principal C++ Developer
 CAE Engineering Kft
 
-Implement flight simulator functions [C++]
-Design and implement tools [Python]
+Implement flight simulator functions and tests [C++] [LUA]
+Design and implement data conversion tools [Python]
 
 ---- experience #sideproject #native ----
 2019
 Author
 side project: ShrinkShot
 
-Utility which cut empty areas from an image, typically a screenshot of a program window [C] [ImageMagick]
+Utility which cut empty areas from an image, typically a screenshot of a program window [C] [ImageMagick]: https://github.com/ern0/shrinkshot
 
-Source code available: https://github.com/ern0/shrinkshot
-
----- experience #web #budapest ----
+---- experience ----
 2016−2017
 Full-Stack Developer, Quality Lead
 EcoStudio Kft
@@ -136,9 +131,9 @@ Implemented features: serial, digital out, web client, web server, LCD, timer in
 
 It’s not an emulator, but it makes embedded development just as comfortable as regular C programming is. With Posixino, C code can be tested on Mac or Linux
 
-Source code available: https://github.com/ern0/posixino
+Source: https://github.com/ern0/posixino
 
----- experience #web #budapest ----
+---- experience ----
 2013−2016
 Senior Full-Stack Developer
 Netavis Kft
@@ -160,7 +155,7 @@ finally resulting a palette
 
 Source code and documentation with examples: https://github.com/ern0/kolorwheel.js/
 
----- experience #embedded #budapest ----
+---- experience ----
 2011−2013
 Senior Embedded and Systems Developer
 Intep Kft
@@ -169,20 +164,20 @@ Outdoor LED wall firmware, font, autokerning renderer #embedded
 Payment kiosk firmware (backend) and GUI [JavaScript] #web
 Modular datasheet creator system [PHP] [HTML] [CSS] [PDF] #web
 
----- experience #native #budapest ----
+---- experience ----
 2006−2011
 Systems Architect, Developer
 Porion Kft, Bitklub Kft
 
 Digital television (DVB) SI/EPG inserter
 * system design and implementation [C++]
-* SI/EPG administration backend and admin UI [PHP] [JavaScript]
-* The competition is suspected us of stealing the EPG system of Conax, the industry leader software (which is slow and expensive)
-* In 2025, the system is still used at various cable providers
+* SI/EPG administration backend and admin UI [PHP] [JavaScript] #web
+* The competition is suspected us of stealing the EPG system of Conax, the industry leader software (which is slow and expensive) #native
+* In 2025, the system is still used at various cable providers #native
 
 Video stream jukebox server design and implementation [C++] #native
 
----- experience #sideproject ----
+---- experience #sideproject #web ----
 2009
 Author
 side project: XmlGraph
@@ -201,7 +196,7 @@ Home automation-purpose dataflow sytem prototype
 * Transpiler from DF script to C++ [PHP] [C++]
 * We created ca. 80 components [C++]
 
-Mobile-first web UI [JavaScript]
+Mobile-first web UI [JavaScript] #web
 
 Also created an editor UI concept [JavaScript] [Raphaël.js] [SVG]
 * source code: https://github.com/ern0/dataflow-editor-concept
@@ -218,7 +213,7 @@ Collaborative spreadsheet concept and prototype
 * general components, ca. 10-15 [PHP]
 * Demand planning purpose components written by co-author
 
----- experience #web #budapest ----
+---- experience ----
 2000−2006
 Full-Stack Developer, SEO expert, CTO
 Index.hu Rt, Rakit Kft, Well-Press Kft
@@ -229,7 +224,7 @@ Design and implement Google position rank monitoring tool for support and measur
 
 Implement simple ad server [PHP]
 
----- experience #java #budapest ----
+---- experience #nokia ----
 Nokia Hungary Kft, NWSS
 Software Developer
 1999-2000
@@ -237,7 +232,7 @@ Software Developer
 Creating games for WAP enabled mobile phones [JAVA] [WML]
 File patents (ca. 2-3)
 
----- experience #erp #gyor ----
+---- experience #gyor ----
 Grabo Holding, Uniontext Kft.
 IT Department Leader (CIO)
 1996-1999
@@ -248,7 +243,7 @@ ISO 9001 compilant logistic system design and supervision
 
 Preliminary cost calculation system design
 
----- experience #erp #gyor ----
+---- experience #gyor ----
 Grabo Holding, Graboplast Kft.
 1989-1996
 Developer
@@ -266,7 +261,7 @@ Stock Register Book system design, backend imeplementation [dBase] [FoxPro]
 Széchenyi István Egyetem, Győr
 Software Developer
 
----- education ----
+---- education #highschool ----
 1985-1989
 Deák Ferenc SZKI, Győr
 IT System Organizer

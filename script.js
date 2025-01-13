@@ -143,8 +143,8 @@ function make_url() {
 }
 
 function update_url() {
-	var url = make_url();
-    history.pushState({}, null, url);
+	app.url = make_url();
+    history.pushState({}, null, app.url);
 }
 
 
